@@ -1,0 +1,11 @@
+color.active=inverse
+color.project.unl2210=magenta
+color.project.cs2102=cyan
+color.project.st2131=green
+color.project.cs2105=yellow
+color.project.cs2104=rgb355
+color.project.cs1101S=blue
+color.project.cs2103=red
+color.project.intern=rgb405
+color.due=color255                 
+color.due.today=color255
