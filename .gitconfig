@@ -1,0 +1,35 @@
+
+[user]
+  name = "Vignesh Shankar"
+  email = "vigneshshankar@gmail.com"
+
+[push]
+  default = simple
+
+[merge]
+  renameLimit = 9000
+
+[core]
+  excludesfile = ~/.gitignore
+  preloadindex = true # http://stackoverflow.com/questions/18257622/why-is-git-core-preloadindex-default-value-false
+  editor = nvim
+  whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+
+[alias]
+  a = add
+  ap = add --patch
+  s = status
+  cv = commit --verbose
+  nuke = reset --hard
+  diffl = diff HEAD~ HEAD
+  lg = log --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)%an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+
+[merge]
+  tool = vimdiff
+
+[mergetool]
+  keepBackup = false
+
+[mergetool "vimdiff"]
+  cmd = nvim -d $LOCAL $REMOTE $MERGED
+
