@@ -264,16 +264,14 @@ let g:ale_linter_aliases = {}
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
-\   'ruby': ['rubocop'],
 \}
 
-let g:ale_fix_on_save = 0
+let g:ale_fix_on_save = 1
 
 " Sorbet LSP and Rubocop (Stripe-specific)
 Plug 'zackhsi/sorbet-lsp'
 if fnamemodify(getcwd(), ':p') == $HOME.'/stripe/pay-server/'
   let g:ale_ruby_rubocop_executable = getcwd() . '/scripts/bin/rubocop'
-  " let g:ale_ruby_rubocop_executable = 'bundle'
   call add(g:ale_linters['ruby'], 'sorbet-lsp')
 end
 
@@ -292,19 +290,9 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " ML all-language completion
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
+" Use ale as a source
+call deoplete#custom#source('ale', 'rank', 999)
 
-" " Completion
-" Plug 'ncm2/ncm2'
-" Plug 'roxma/nvim-yarp'
-" " enable ncm2 for all buffers
-" autocmd BufEnter * call ncm2#enable_for_buffer()
-" " IMPORTANT: :help Ncm2PopupOpen for more information
-" set completeopt=noinsert,menuone,noselect
-" " NOTE: you need to install completion sources to get completions. Check
-" " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
-" Plug 'ncm2/ncm2-bufword'
-" Plug 'ncm2/ncm2-path'
-"
 call plug#end()
 
 " colorscheme needs runtime ("echo &rtp") to include Plug directories
@@ -313,4 +301,3 @@ colorscheme base16-material-palenight
 
 let g:deoplete#enable_at_startup = 1
 
-call deoplete#custom#source('ale', 'rank', 999)
