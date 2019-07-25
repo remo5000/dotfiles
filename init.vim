@@ -262,11 +262,14 @@ Plug 'w0rp/ale'
 let g:ale_linters = {
 \   'ruby': ['ruby', 'rubocop'],
 \   'scala': ['fsc', 'sbtserver', 'scalac', 'scalastyle'],
+\   'typescript': ['tsserver', 'tslint', 'prettier'],
+\   'javascript': ['eslint'],
 \}
 let g:ale_linter_aliases = {}
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'typescript': ['tslint', 'prettier'],
 \   'javascript': ['eslint'],
 \   'scala': ['scalafmt'],
 \}
@@ -303,6 +306,16 @@ let g:mta_filetypes = {
     \ 'xml' : 1,
     \ 'jinja' : 1,
     \}
+
+" TS support
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+augroup Typescript
+  autocmd!
+  autocmd FileType typescript nnoremap <leader>K :TSTypeDef<CR>
+  autocmd FileType typescript nnoremap <C-]> :TSDef<CR>
+  autocmd FileType typescript nnoremap K :TSDoc<CR>
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Deoplete | Completion
