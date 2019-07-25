@@ -123,6 +123,7 @@ augroup END
 "             Plug
 """"""""""""""""""""""""
 call plug#begin('~/.config/nvim/plugged')
+nnoremap <leader>pi :PlugInstall<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FZF & Rg | Search
@@ -242,28 +243,32 @@ Plug 'majutsushi/tagbar'
 let g:tagbar_sort = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Surround
+" Surround, Brackets, Selection
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
+Plug 'terryma/vim-expand-region'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ale | Types
+" Ale, others | Syntax
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'w0rp/ale'
 
 " custom signs
-let g:ale_sign_warning='○'
-let g:ale_sign_error='○'
+" let g:ale_sign_warning='○'
+" let g:ale_sign_error='○'
 
 let g:ale_linters = {
 \   'ruby': ['ruby', 'rubocop'],
+\   'scala': ['fsc', 'sbtserver', 'scalac', 'scalastyle'],
 \}
 let g:ale_linter_aliases = {}
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
+\   'scala': ['scalafmt'],
 \}
 
 let g:ale_fix_on_save = 1
@@ -282,16 +287,51 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " Airline support
 let g:airline#extensions#ale#enabled = 1
 
+" Format linter output
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+" Debug LSP
+" let g:ale_command_wrapper = '~/alewrapper.sh'
+
+" HTML tag matching
+Plug 'valloric/MatchTagAlways'
+let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \}
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Deoplete | Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-" ML all-language completion
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+
+" ML-powered completion
 Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
 
-" Use ale as a source
-call deoplete#custom#source('ale', 'rank', 999)
+" Prevent slow vim exits
+function! OnTermClose()
+    if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+        :quit!
+    else
+        call feedkeys(" ")
+    endif
+endfunction
+au TermClose * nested call OnTermClose()
+
+" Snippets
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+
+" Ctrl K to fill in the next blank of the snippet
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 call plug#end()
 
@@ -299,5 +339,8 @@ call plug#end()
 " before it can load installed colors.
 colorscheme base16-material-palenight
 
-let g:deoplete#enable_at_startup = 1
-
+" Optimize tabnine performance -- 200 instead of 1K, 5 instead of 20
+call deoplete#custom#var('tabnine', {
+\ 'line_limit': 200,
+\ 'max_num_results': 5,
+\ })
