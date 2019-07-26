@@ -250,6 +250,22 @@ Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-expand-region'
 
+Plug 'terryma/vim-multiple-cursors'
+" No alt key in terminal, use C-a
+let g:multi_cursor_select_all_key = '<C-a>'
+" Don't use NeoComplete for multiple cursors
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ale, others | Syntax
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
