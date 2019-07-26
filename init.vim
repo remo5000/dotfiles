@@ -123,7 +123,7 @@ augroup END
 "             Plug
 """"""""""""""""""""""""
 call plug#begin('~/.config/nvim/plugged')
-nnoremap <leader>pi :PlugInstall<CR>
+nnoremap <leader>P :PlugInstall<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FZF & Rg | Search
@@ -157,6 +157,9 @@ command! -bang -nargs=* Rg
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:40%', '?'),
   \   <bang>0)
+" Shorthand
+command! F Rg
+
 
 " Search word under cursor with leader + f.
 nnoremap <silent> <leader>f :silent Rg -sw <C-r>=<SID>CWordEscaped()<CR><CR>
