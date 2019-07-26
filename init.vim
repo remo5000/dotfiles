@@ -268,6 +268,8 @@ function! Multiple_cursors_after()
   endif
 endfunction
 
+" Highlight word under cursor
+Plug 'pboettch/vim-highlight-cursor-words'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ale, others | Syntax
