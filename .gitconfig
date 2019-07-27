@@ -12,7 +12,7 @@
 [core]
   excludesfile = ~/.gitignore
   preloadindex = true # http://stackoverflow.com/questions/18257622/why-is-git-core-preloadindex-default-value-false
-  editor = nvim
+  editor = nvim -u ~/.config/nvim/minimal.init.vim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
 [alias]
@@ -22,7 +22,9 @@
   cv = commit --verbose
   nuke = reset --hard
   diffl = diff HEAD~ HEAD
+  adog = log --all --decorate --oneline --graph
   lg = log --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)%an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+  lga = log --all --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)%an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
 
 [merge]
   tool = vimdiff
@@ -32,4 +34,3 @@
 
 [mergetool "vimdiff"]
   cmd = nvim -d $LOCAL $REMOTE $MERGED
-
