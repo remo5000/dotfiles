@@ -72,6 +72,9 @@ nnoremap P "+P
 vnoremap p "+p
 vnoremap P "+P
 
+" Copy entire buffer
+nnoremap <leader>B ggVGy
+
 " FZF
 set rtp+=/usr/local/opt/fzf
 
@@ -88,8 +91,8 @@ function! s:PayTestOnCurrentLine()
 endfunction
 
 if fnamemodify(getcwd(), ':p') == $HOME.'/stripe/pay-server/'
-  nnoremap <leader>t :call <SID>PayTestOnCurrentLine()<CR>
-  nnoremap <leader>re :call <SID>PayTestOnLastLine()<CR>
+  nnoremap <leader>tt :call <SID>PayTestOnCurrentLine()<CR>
+  nnoremap <leader>tr :call <SID>PayTestOnLastLine()<CR>
 end
 
 " Never use paste mode
@@ -103,6 +106,7 @@ augroup Indentation
   autocmd Filetype bash       setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype bzl        setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd Filetype ruby       setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd Filetype python     setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd Filetype sh         setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype sql        setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype thrift     setlocal tabstop=2 softtabstop=2 shiftwidth=2
@@ -116,6 +120,12 @@ augroup FileTypeAliases
   autocmd BufNewFile,BufRead {.,}tmux*.conf* setfiletype tmux
   autocmd BufNewFile,BufRead *.tsx set filetype=typescript
   autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
+augroup END
+
+" CP bindings.
+" Requries an a.in file at the root dir
+augroup CompProg
+  autocmd Filetype python nnoremap <leader>r :w <bar> !python % < a.in <CR>
 augroup END
 
 
@@ -250,22 +260,19 @@ let g:tagbar_sort = 0
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-expand-region'
 
 Plug 'terryma/vim-multiple-cursors'
 " No alt key in terminal, use C-a
 let g:multi_cursor_select_all_key = '<C-a>'
+
 " Don't use NeoComplete for multiple cursors
 function! Multiple_cursors_before()
-  if exists(':NeoCompleteLock')==2
-    exe 'NeoCompleteLock'
-  endif
+    let b:deoplete_disable_auto_complete = 1
 endfunction
+
 function! Multiple_cursors_after()
-  if exists(':NeoCompleteUnlock')==2
-    exe 'NeoCompleteUnlock'
-  endif
+    let b:deoplete_disable_auto_complete = 0
 endfunction
 
 " Highlight word under cursor
@@ -283,15 +290,17 @@ Plug 'w0rp/ale'
 let g:ale_linters = {
 \   'ruby': ['ruby', 'rubocop'],
 \   'scala': ['fsc', 'sbtserver', 'scalac', 'scalastyle'],
-\   'typescript': ['tsserver', 'tslint', 'prettier'],
+\   'typescript': ['tsserver', 'tslint'],
+\   'python': ['pylint'],
 \   'javascript': ['eslint'],
 \}
 let g:ale_linter_aliases = {}
 
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'typescript': ['tslint', 'prettier'],
+\   'typescript': ['tslint'],
 \   'javascript': ['eslint'],
+\   'python': ['autopep8', 'yapf'],
 \   'scala': ['scalafmt'],
 \}
 
@@ -357,6 +366,9 @@ function! OnTermClose()
     endif
 endfunction
 au TermClose * nested call OnTermClose()
+
+" Use Ctrl F for selecting the first completion
+imap <C-f> <C-n>
 
 " Snippets
 Plug 'Shougo/neosnippet.vim'

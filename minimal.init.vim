@@ -74,8 +74,3 @@ vnoremap P "+P
 
 " Never use paste mode
 au InsertLeave * set nopaste
-
-
-" colorscheme needs runtime ("echo &rtp") to include Plug directories
-" before it can load installed colors.
-colorscheme base16-material-palenight
