@@ -239,8 +239,8 @@ let g:gutentags_generate_on_empty_buffer = 1
 " Search tags in buffer by using leader + b.
 noremap <silent> <leader>b :silent BTags<CR>
 
-" Update tags using leader + c.
-noremap <Leader>c :GutentagsUpdate!<CR>
+" Update tags using leader + C.
+noremap <Leader>C :GutentagsUpdate!<CR>
 
 Plug 'zackhsi/fzf-tags'
 
@@ -256,7 +256,7 @@ Plug 'majutsushi/tagbar'
 let g:tagbar_sort = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Surround, Brackets, Selection
+" Surround, Brackets, Selection, Commenting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Plug 'tpope/vim-surround'
@@ -277,6 +277,9 @@ endfunction
 
 " Highlight word under cursor
 Plug 'pboettch/vim-highlight-cursor-words'
+
+" Comment stuff
+Plug 'scrooloose/nerdcommenter'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ale, others | Syntax
