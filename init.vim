@@ -90,7 +90,6 @@ set rtp+=/usr/local/opt/fzf
 function! s:PayTestOnLastLine()
   let pay_test_command = '"pay test -f ' . expand('%') . ' -l ' . g:last_line . '"'
   execute 'silent !tmux send-keys -R -t "pay test" ' . pay_test_command . ' Enter'
-  execute 'silent !tmux select-window -t "pay test"'
 endfunction
 
 function! s:PayTestOnCurrentLine()
@@ -101,6 +100,45 @@ endfunction
 if fnamemodify(getcwd(), ':p') == $HOME.'/stripe/pay-server/'
   nnoremap <leader>tt :call <SID>PayTestOnCurrentLine()<CR>
   nnoremap <leader>tr :call <SID>PayTestOnLastLine()<CR>
+end
+
+function! s:SorbetBazelTest()
+  " removes the /test (slicing) and extension (:r) from the current filename,
+  " before appending to a bazel test command
+  let bazel_test_command = '"bazel test --config=dbg //test:test_LSPTests/' . expand('%:r')[5:] . '"'
+  " Ensure directory
+  execute 'silent !tmux send-keys -R -t "pay test" ' . '"cd ~/stripe/sorbet"' . ' Enter'
+  execute 'silent !tmux send-keys -R -t "pay test" ' . bazel_test_command . ' Enter'
+endfunction
+
+function! s:SorbetLldbTest()
+  " removes the extension (:r) from the current filename,
+  " before appending to a lldb test command
+  let lldb_test_command = '"lldb -- ./bazel-bin/test/test_corpus_sharded --single_test=' . expand('%:r') . ' \"--gtest_filter=LSPTests/*\"' . '"'
+  echo lldb_test_command
+  " Ensure directory
+  " execute 'silent !tmux send-keys -R -t "pay test" ' . '"cd ~/stripe/sorbet"' . ' Enter'
+  execute 'silent !tmux send-keys -R -t "pay test" ' . lldb_test_command . ' Enter'
+endfunction
+
+function! s:SorbetLldbExpr()
+  let command = '"expr ' . expand("<cword>") . '"'
+  echo command
+  execute 'silent !tmux send-keys -R -t "pay test" ' . command . ' Enter'
+endfunction
+
+function! s:SorbetLldbAddBreakpointAtCurrentLine()
+  let g:last_line = line('.')
+  let lldb_breakpoint = '"b ' . expand('%:t') . ':'. g:last_line . '"'
+  echo lldb_breakpoint
+  execute 'silent !tmux send-keys -R -t "pay test" ' . lldb_breakpoint ' Enter'
+endfunction
+
+if fnamemodify(getcwd(), ':p') == $HOME.'/stripe/sorbet/'
+  nnoremap <leader>tt :call <SID>SorbetBazelTest()<CR>
+  nnoremap <leader>td :call <SID>SorbetLldbTest()<CR>
+  nnoremap <leader>tb :call <SID>SorbetLldbAddBreakpointAtCurrentLine()<CR>
+  nnoremap <leader>tp :call <SID>SorbetLldbExpr()<CR>
 end
 
 " Never use paste mode
