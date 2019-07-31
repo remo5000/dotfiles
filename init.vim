@@ -47,21 +47,20 @@ tnoremap <Esc> <C-\><C-n>
 nnoremap <leader>v :source $MYVIMRC<CR>
 nnoremap <leader>e :e $MYVIMRC<CR>
 
+" Close this buffer.
+nnoremap <leader>w :bd<CR>
+
 " Double slash to search for visual selection.
 " http://vim.wikia.com/wiki/Search_for_visually_selected_text
 vnorem // y/<c-r>"<cr>
 
-" Clear highlights
+" Clear highlights.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 " Copy current filepath to systen clipboard.
 nnoremap <Leader>y :let @+ = expand("%")<CR>
 nnoremap <Leader>Y :let @+ = expand("%:t")<CR>
 command! Dirname :let @+ = expand("%:h")
-
-" Ruler
-set ruler
-set number                     " Show current line number
 
 " Trailing whitespace
 :highlight ExtraWhitespace ctermbg=red guibg=red
@@ -79,6 +78,10 @@ vnoremap P "+P
 
 " Copy entire buffer
 nnoremap <leader>B ggVGy
+
+" Navigate buffers using leader h/l.
+noremap <leader>h :bp <CR>
+nnoremap <leader>l :bn <CR>
 
 " FZF
 set rtp+=/usr/local/opt/fzf
@@ -200,12 +203,15 @@ endif
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme='base16'
+let g:airline#extensions#tabline#enabled = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GitGutter, Fugitive | Git.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'airblade/vim-gitgutter'
+" Don't use leader h mappings, I want those for buffer navigation.
+let g:gitgutter_map_keys = 0
 
 " Show git diffs of a file when entering/leaving
 augroup improved_autoread
