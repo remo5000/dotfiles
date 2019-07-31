@@ -411,9 +411,6 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
 
-" ML-powered completion
-Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
-
 " Prevent slow vim exits
 function! OnTermClose()
     if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
