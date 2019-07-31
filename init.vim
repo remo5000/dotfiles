@@ -23,6 +23,11 @@ set tabstop=2                      " 1 tab == 2 spaces
 set splitbelow                     " all horizontal splits open to the bottom
 set splitright                     " all vertical splits open to the right
 
+set ruler                          " Use the ruler
+set number                         " Show current line number
+
+set hidden                         " Don't warn when leaving an unsaved buffer
+
 let mapleader = "\<Space>"         " Use space as leader
 
 " Newline
