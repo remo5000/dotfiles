@@ -393,13 +393,16 @@ let g:mta_filetypes = {
 
 " TS support
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-augroup Typescript
-  autocmd!
-  autocmd FileType typescript nnoremap <leader>K :TSTypeDef<CR>
-  autocmd FileType typescript nnoremap <C-]> :TSDef<CR>
-  autocmd FileType typescript nnoremap K :TSDoc<CR>
-augroup END
+" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+" augroup Typescript
+"   autocmd!
+"   autocmd FileType typescript nnoremap <leader>K :TSTypeDef<CR>
+"   autocmd FileType typescript nnoremap <C-]> :TSDef<CR>
+"   autocmd FileType typescript nnoremap K :TSDoc<CR>
+" augroup END
+
+" Nicer C++ syntax
+Plug 'octol/vim-cpp-enhanced-highlight'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Deoplete | Completion
