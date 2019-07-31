@@ -6,7 +6,7 @@ set foldmethod=indent              " set a foldmethod
 set nofoldenable
 set mouse=a                        " enable mouse
 set number                         " line numbers
-set scrolloff=2                    " Always shows two lines of vertical context around the cursor
+set scrolloff=10                   " Always shows some lines of vertical context around the cursor
 set showcmd                        " show incomplete commands
 set undofile
 set updatetime=100
