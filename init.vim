@@ -333,6 +333,7 @@ let g:ale_linter_aliases = {}
 let g:ale_fixers = {
 \   '*': ['trim_whitespace'],
 \   'typescript': ['tslint'],
+\   'cpp': ['clang-format'],
 \   'javascript': ['eslint'],
 \   'python': ['autopep8', 'yapf'],
 \   'scala': ['scalafmt'],
