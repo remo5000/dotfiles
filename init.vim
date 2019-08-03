@@ -262,9 +262,6 @@ Plug 'tpope/vim-vinegar'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'ludovicchabant/vim-gutentags'
 
-" Generate tags right after opening vim (empty buffer)
-let g:gutentags_generate_on_empty_buffer = 1
-
 " Search tags in buffer by using leader + b.
 noremap <silent> <leader>b :silent BTags<CR>
 
@@ -316,10 +313,6 @@ Plug 'scrooloose/nerdcommenter'
 " Ale, others | Syntax
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'w0rp/ale'
-
-" custom signs
-" let g:ale_sign_warning='○'
-" let g:ale_sign_error='○'
 
 let g:ale_linters = {
 \   'ruby': ['ruby', 'rubocop'],
