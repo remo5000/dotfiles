@@ -146,6 +146,7 @@ augroup FileTypeAliases
   autocmd!
   autocmd BufNewFile,BufRead {.,}tmux*.conf* setfiletype tmux
   autocmd BufNewFile,BufRead *.tsx set filetype=typescript
+  autocmd BufNewFile,BufRead *.ts set filetype=typescript
   autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
 augroup END
 
@@ -288,18 +289,9 @@ let g:tagbar_sort = 0
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-expand-region'
 
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 " No alt key in terminal, use C-a
-let g:multi_cursor_select_all_key = '<C-a>'
-
-" " Don't use NeoComplete for multiple cursors
-" function! Multiple_cursors_before()
-"     let b:deoplete_disable_auto_complete = 1
-" endfunction
-" 
-" function! Multiple_cursors_after()
-"     let b:deoplete_disable_auto_complete = 0
-" endfunction
+" let g:multi_cursor_select_all_key = '<C-a>'
 
 " Highlight word under cursor
 Plug 'pboettch/vim-highlight-cursor-words'
@@ -308,51 +300,8 @@ Plug 'pboettch/vim-highlight-cursor-words'
 Plug 'scrooloose/nerdcommenter'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Ale, others | Syntax
+" Syntax
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plug 'w0rp/ale'
-"
-" let g:ale_linters = {
-" \   'ruby': ['ruby', 'rubocop'],
-" \   'scala': ['fsc', 'sbtserver', 'scalac', 'scalastyle'],
-" \   'typescript': ['tsserver', 'tslint'],
-" \   'python': ['pylint'],
-" \   'javascript': ['eslint'],
-" \}
-" let g:ale_linter_aliases = {}
-"
-" let g:ale_fixers = {
-" \   '*': ['trim_whitespace'],
-" \   'typescript': ['tslint'],
-" \   'cpp': ['clang-format'],
-" \   'javascript': ['eslint'],
-" \   'python': ['autopep8', 'yapf'],
-" \   'scala': ['scalafmt'],
-" \}
-"
-" let g:ale_fix_on_save = 1
-"
-" " Sorbet LSP and Rubocop (Stripe-specific)
-" Plug 'zackhsi/sorbet-lsp'
-" if fnamemodify(getcwd(), ':p') == $HOME.'/stripe/pay-server/'
-"   let g:ale_ruby_rubocop_executable = getcwd() . '/scripts/bin/rubocop'
-"   call add(g:ale_linters['ruby'], 'sorbet-lsp')
-" end
-"
-" " Navigate between errors
-" nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-" nmap <silent> <C-j> <Plug>(ale_next_wrap)
-"
-" " Airline support
-" let g:airline#extensions#ale#enabled = 1
-"
-" " Format linter output
-" let g:ale_echo_msg_error_str = 'E'
-" let g:ale_echo_msg_warning_str = 'W'
-" let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
-" Debug LSP
-" let g:ale_command_wrapper = '~/alewrapper.sh'
 
 " HTML tag matching
 Plug 'valloric/MatchTagAlways'
@@ -363,50 +312,46 @@ let g:mta_filetypes = {
     \ 'jinja' : 1,
     \}
 
-" TS support
-" Plug 'HerringtonDarkholme/yats.vim'
-" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
-" augroup Typescript
-"   autocmd!
-"   autocmd FileType typescript nnoremap <leader>K :TSTypeDef<CR>
-"   autocmd FileType typescript nnoremap <C-]> :TSDef<CR>
-"   autocmd FileType typescript nnoremap K :TSDoc<CR>
-" augroup END
-
 " Nicer C++ syntax
 Plug 'octol/vim-cpp-enhanced-highlight'
 
-" Coc
+""""""""""""
+"    Coc   "
+""""""""""""
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"
+" Jump between errors
+nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Deoplete | Completion
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Show def
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" let g:deoplete#enable_at_startup = 1
-"
-" " Prevent slow vim exits
-" function! OnTermClose()
-"     if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-"         :quit!
-"     else
-"         call feedkeys(" ")
-"     endif
-" endfunction
-" au TermClose * nested call OnTermClose()
-"
-" " Use Ctrl F for selecting the first completion
-" imap <C-f> <C-n>
-"
-" " Snippets
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'Shougo/neosnippet-snippets'
-"
-" " Ctrl K to fill in the next blank of the snippet
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k>     <Plug>(neosnippet_expand_target)
+" Goto defs
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+
+let g:coc_global_extensions = [
+      \"coc-snippets",
+      \"coc-json", 
+      \"coc-typescript", 
+      \"coc-tslint",
+      \"coc-yank",
+      \"coc-vimlsp"
+      \]
+
+" TS syntax
+Plug 'HerringtonDarkholme/yats.vim'
 
 call plug#end()
 
@@ -414,8 +359,3 @@ call plug#end()
 " before it can load installed colors.
 colorscheme base16-material-palenight
 
-" Optimize tabnine performance -- 200 instead of 1K, 5 instead of 20
-" call deoplete#custom#var('tabnine', {
-" \ 'line_limit': 200,
-" \ 'max_num_results': 5,
-" \ })
