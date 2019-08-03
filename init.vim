@@ -268,8 +268,6 @@ noremap <silent> <leader>b :silent BTags<CR>
 " Update tags using leader + C.
 noremap <Leader>C :GutentagsUpdate!<CR>
 
-let g:gutentags_ctags_executable_cpp = 'rtags'
-
 Plug 'zackhsi/fzf-tags'
 
 " Use fzf_tags for searching tags
@@ -294,14 +292,14 @@ Plug 'terryma/vim-multiple-cursors'
 " No alt key in terminal, use C-a
 let g:multi_cursor_select_all_key = '<C-a>'
 
-" Don't use NeoComplete for multiple cursors
-function! Multiple_cursors_before()
-    let b:deoplete_disable_auto_complete = 1
-endfunction
-
-function! Multiple_cursors_after()
-    let b:deoplete_disable_auto_complete = 0
-endfunction
+" " Don't use NeoComplete for multiple cursors
+" function! Multiple_cursors_before()
+"     let b:deoplete_disable_auto_complete = 1
+" endfunction
+" 
+" function! Multiple_cursors_after()
+"     let b:deoplete_disable_auto_complete = 0
+" endfunction
 
 " Highlight word under cursor
 Plug 'pboettch/vim-highlight-cursor-words'
@@ -312,46 +310,46 @@ Plug 'scrooloose/nerdcommenter'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Ale, others | Syntax
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'w0rp/ale'
-
-let g:ale_linters = {
-\   'ruby': ['ruby', 'rubocop'],
-\   'scala': ['fsc', 'sbtserver', 'scalac', 'scalastyle'],
-\   'typescript': ['tsserver', 'tslint'],
-\   'python': ['pylint'],
-\   'javascript': ['eslint'],
-\}
-let g:ale_linter_aliases = {}
-
-let g:ale_fixers = {
-\   '*': ['trim_whitespace'],
-\   'typescript': ['tslint'],
-\   'cpp': ['clang-format'],
-\   'javascript': ['eslint'],
-\   'python': ['autopep8', 'yapf'],
-\   'scala': ['scalafmt'],
-\}
-
-let g:ale_fix_on_save = 1
-
-" Sorbet LSP and Rubocop (Stripe-specific)
-Plug 'zackhsi/sorbet-lsp'
-if fnamemodify(getcwd(), ':p') == $HOME.'/stripe/pay-server/'
-  let g:ale_ruby_rubocop_executable = getcwd() . '/scripts/bin/rubocop'
-  call add(g:ale_linters['ruby'], 'sorbet-lsp')
-end
-
-" Navigate between errors
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-
-" Airline support
-let g:airline#extensions#ale#enabled = 1
-
-" Format linter output
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+" Plug 'w0rp/ale'
+"
+" let g:ale_linters = {
+" \   'ruby': ['ruby', 'rubocop'],
+" \   'scala': ['fsc', 'sbtserver', 'scalac', 'scalastyle'],
+" \   'typescript': ['tsserver', 'tslint'],
+" \   'python': ['pylint'],
+" \   'javascript': ['eslint'],
+" \}
+" let g:ale_linter_aliases = {}
+"
+" let g:ale_fixers = {
+" \   '*': ['trim_whitespace'],
+" \   'typescript': ['tslint'],
+" \   'cpp': ['clang-format'],
+" \   'javascript': ['eslint'],
+" \   'python': ['autopep8', 'yapf'],
+" \   'scala': ['scalafmt'],
+" \}
+"
+" let g:ale_fix_on_save = 1
+"
+" " Sorbet LSP and Rubocop (Stripe-specific)
+" Plug 'zackhsi/sorbet-lsp'
+" if fnamemodify(getcwd(), ':p') == $HOME.'/stripe/pay-server/'
+"   let g:ale_ruby_rubocop_executable = getcwd() . '/scripts/bin/rubocop'
+"   call add(g:ale_linters['ruby'], 'sorbet-lsp')
+" end
+"
+" " Navigate between errors
+" nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-j> <Plug>(ale_next_wrap)
+"
+" " Airline support
+" let g:airline#extensions#ale#enabled = 1
+"
+" " Format linter output
+" let g:ale_echo_msg_error_str = 'E'
+" let g:ale_echo_msg_warning_str = 'W'
+" let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
 " Debug LSP
 " let g:ale_command_wrapper = '~/alewrapper.sh'
@@ -366,7 +364,7 @@ let g:mta_filetypes = {
     \}
 
 " TS support
-Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'HerringtonDarkholme/yats.vim'
 " Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 " augroup Typescript
 "   autocmd!
@@ -378,34 +376,37 @@ Plug 'HerringtonDarkholme/yats.vim'
 " Nicer C++ syntax
 Plug 'octol/vim-cpp-enhanced-highlight'
 
+" Coc
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Deoplete | Completion
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-
-" Prevent slow vim exits
-function! OnTermClose()
-    if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-        :quit!
-    else
-        call feedkeys(" ")
-    endif
-endfunction
-au TermClose * nested call OnTermClose()
-
-" Use Ctrl F for selecting the first completion
-imap <C-f> <C-n>
-
-" Snippets
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-
-" Ctrl K to fill in the next blank of the snippet
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" let g:deoplete#enable_at_startup = 1
+"
+" " Prevent slow vim exits
+" function! OnTermClose()
+"     if len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+"         :quit!
+"     else
+"         call feedkeys(" ")
+"     endif
+" endfunction
+" au TermClose * nested call OnTermClose()
+"
+" " Use Ctrl F for selecting the first completion
+" imap <C-f> <C-n>
+"
+" " Snippets
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
+"
+" " Ctrl K to fill in the next blank of the snippet
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 call plug#end()
 
@@ -414,7 +415,7 @@ call plug#end()
 colorscheme base16-material-palenight
 
 " Optimize tabnine performance -- 200 instead of 1K, 5 instead of 20
-call deoplete#custom#var('tabnine', {
-\ 'line_limit': 200,
-\ 'max_num_results': 5,
-\ })
+" call deoplete#custom#var('tabnine', {
+" \ 'line_limit': 200,
+" \ 'max_num_results': 5,
+" \ })
