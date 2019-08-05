@@ -289,9 +289,9 @@ let g:tagbar_sort = 0
 Plug 'tpope/vim-surround'
 Plug 'terryma/vim-expand-region'
 
-" Plug 'terryma/vim-multiple-cursors'
+Plug 'terryma/vim-multiple-cursors'
 " No alt key in terminal, use C-a
-" let g:multi_cursor_select_all_key = '<C-a>'
+let g:multi_cursor_select_all_key = '<C-a>'
 
 " Highlight word under cursor
 Plug 'pboettch/vim-highlight-cursor-words'
@@ -334,17 +334,16 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Goto defs
+" Goto mappings
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
 
 let g:coc_global_extensions = [
       \"coc-snippets",
       \"coc-json", 
-      \"coc-typescript", 
+      \"coc-tsserver", 
       \"coc-tslint",
       \"coc-yank",
       \"coc-vimlsp"
