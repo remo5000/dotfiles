@@ -302,21 +302,14 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 
-" Show def
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
 " Goto mappings
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Preview definition using K
+nn <silent> K :call CocActionAsync('doHover')<cr>
 
 let g:coc_global_extensions = [
       \"coc-snippets",
