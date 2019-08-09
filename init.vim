@@ -79,6 +79,9 @@ vnoremap P "+P
 " Copy entire buffer
 nnoremap <leader>B ggVGy
 
+" Search for buffers
+nnoremap <leader>b :Buffers<CR>
+
 " Navigate buffers using leader h/l.
 noremap <leader>h :bp <CR>
 nnoremap <leader>l :bn <CR>
@@ -256,31 +259,6 @@ noremap <leader>grc :Git rebase --continue<CR>
 " Vinegar.
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plug 'tpope/vim-vinegar'
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Definitions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'ludovicchabant/vim-gutentags'
-
-" Search tags in buffer by using leader + b.
-noremap <silent> <leader>b :silent BTags<CR>
-
-" Update tags using leader + C.
-noremap <Leader>C :GutentagsUpdate!<CR>
-
-Plug 'zackhsi/fzf-tags'
-
-" Use fzf_tags for searching tags
-nmap <C-]> <Plug>(fzf_tags)
-
-Plug 'majutsushi/tagbar'
-
-" Use TT in vim command line to toggle tagbar
-:command! TT TagbarToggle
-
-" List files by declaration order
-let g:tagbar_sort = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Surround, Brackets, Selection, Commenting
