@@ -1,0 +1,28 @@
+{
+  "languageserver": {
+    "sorbet-lsp": {
+      "command": "/Users/vigneshshankar/stripe/sorbet/bazel-bin/main/sorbet",
+      "args": [
+        "--lsp",
+        "-v",
+        "--enable-all-experimental-lsp-features",
+        "."
+      ],
+      "filetypes": ["ruby"],
+       "initializationOptions": {},
+      "settings": {}
+    },
+    "clangd": {
+      "command": "/usr/local/Cellar/llvm/8.0.0_1/bin/clangd",
+      "rootPatterns": [
+        "WORKSPACE",
+        "compile_flags.json",
+        "compile_commands.json",
+        ".vim/",
+        ".git/",
+        ".hg/"
+      ],
+      "filetypes": ["c", "cpp", "objc", "objcpp"]
+    }
+  }
+}
