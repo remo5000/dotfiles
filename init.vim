@@ -317,7 +317,8 @@ let g:coc_global_extensions = [
       \"coc-tsserver", 
       \"coc-tslint",
       \"coc-yank",
-      \"coc-vimlsp"
+      \"coc-vimlsp",
+      \"coc-python"
       \]
 
 " TS syntax
