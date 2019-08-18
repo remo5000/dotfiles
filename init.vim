@@ -89,41 +89,6 @@ nnoremap <leader>l :bn <CR>
 " FZF
 set rtp+=/usr/local/opt/fzf
 
-" Stripe - API
-function! s:PayTestOnLastLine()
-  let pay_test_command = '"pay test -f ' . expand('%') . ' -l ' . g:last_line . '"'
-  execute 'silent !tmux send-keys -R -t "pay test" ' . pay_test_command . ' Enter'
-endfunction
-
-function! s:PayTestOnCurrentLine()
-  let g:last_line = line('.')
-  :call s:PayTestOnLastLine()
-endfunction
-
-if fnamemodify(getcwd(), ':p') == $HOME.'/stripe/pay-server/'
-  nnoremap <leader>tt :call <SID>PayTestOnCurrentLine()<CR>
-  nnoremap <leader>tr :call <SID>PayTestOnLastLine()<CR>
-end
-
-" Stripe - Sorbet
-function! s:SorbetLldbExpr()
-  let command = '"expr ' . expand("<cword>") . '"'
-  echo command
-  execute 'silent !tmux send-keys -R -t "pay test" ' . command . ' Enter'
-endfunction
-
-function! s:SorbetLldbAddBreakpointAtCurrentLine()
-  let g:last_line = line('.')
-  let lldb_breakpoint = '"b ' . expand('%:t') . ':'. g:last_line . '"'
-  echo lldb_breakpoint
-  execute 'silent !tmux send-keys -R -t "pay test" ' . lldb_breakpoint ' Enter'
-endfunction
-
-if fnamemodify(getcwd(), ':p') == $HOME.'/stripe/sorbet/'
-  nnoremap <leader>tb :call <SID>SorbetLldbAddBreakpointAtCurrentLine()<CR>
-  nnoremap <leader>tp :call <SID>SorbetLldbExpr()<CR>
-end
-
 " Never use paste mode
 au InsertLeave * set nopaste
 
@@ -244,7 +209,6 @@ augroup improved_autoread
 augroup end
 
 Plug 'tpope/vim-fugitive'
-let g:github_enterprise_urls = ['git.corp.stripe.com']
 noremap <leader>gs :Git<CR>
 noremap <leader>gwr :Gwrite<CR>
 noremap <leader>ga :Git add --patch<CR>
