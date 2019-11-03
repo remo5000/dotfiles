@@ -34,6 +34,9 @@ let mapleader = "\<Space>"         " Use space as leader
 map <Enter> o<ESC>
 map <S-Enter> O<ESC>
 
+" Remove trailing newline
+autocmd BufWritePre * :%s/\s\+$//e
+
 " JK is Esc
 imap jk <Esc>
 
@@ -47,8 +50,8 @@ tnoremap <Esc> <C-\><C-n>
 nnoremap <leader>v :source $MYVIMRC<CR>
 nnoremap <leader>e :e $MYVIMRC<CR>
 
-" Close this buffer.
-nnoremap <leader>w :bd<CR>
+" Close this buffer, but don't delete the window.
+nnoremap <leader>w :bp<bar>sp<bar>bn<bar>bd<CR>
 
 " Double slash to search for visual selection.
 " http://vim.wikia.com/wiki/Search_for_visually_selected_text
@@ -86,6 +89,12 @@ nnoremap <leader>b :Buffers<CR>
 noremap <leader>h :bp <CR>
 nnoremap <leader>l :bn <CR>
 
+" Call "make".
+nnoremap <leader>m :!make<CR>
+
+" Close netrw buffers when we open a file.
+let g:netrw_fastbrowse = 0
+
 " FZF
 set rtp+=/usr/local/opt/fzf
 
@@ -103,7 +112,7 @@ augroup Indentation
   autocmd Filetype python     setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd Filetype sh         setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype sql        setlocal tabstop=2 softtabstop=2 shiftwidth=2
-  autocmd Filetype cpp        setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  autocmd Filetype cpp        setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype thrift     setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype vim        setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype xml        setlocal tabstop=2 softtabstop=2 shiftwidth=2
@@ -257,6 +266,10 @@ let g:mta_filetypes = {
 " Nicer C++ syntax
 Plug 'octol/vim-cpp-enhanced-highlight'
 
+" Java CUP syntax
+Plug 'vim-scripts/cup.vim'
+autocmd BufNewFile,BufRead *.cup setf cup
+
 """"""""""""
 "    Coc   "
 """"""""""""
@@ -266,31 +279,44 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 
-" Goto mappings
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gt <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 
 " Preview definition using K
 nn <silent> K :call CocActionAsync('doHover')<cr>
 
 let g:coc_global_extensions = [
       \"coc-snippets",
-      \"coc-json", 
-      \"coc-tsserver", 
+      \"coc-json",
+      \"coc-tsserver",
       \"coc-tslint",
       \"coc-yank",
       \"coc-vimlsp",
-      \"coc-python"
+      \"coc-python",
+      \"coc-dictionary",
+      \"coc-word",
+      \"coc-vetur",
+      \"coc-java"
       \]
 
 " TS syntax
 Plug 'HerringtonDarkholme/yats.vim'
+
+" Vue syntax
+Plug 'posva/vim-vue'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Org mode
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plug 'jceb/vim-orgmode'
 
 call plug#end()
 
 " colorscheme needs runtime ("echo &rtp") to include Plug directories
 " before it can load installed colors.
 colorscheme base16-material-palenight
+
+" Goto mappings
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
