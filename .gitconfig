@@ -1,7 +1,7 @@
 
 [user]
-  name = "Vignesh Shankar"
-  email = "vigneshshankar@gmail.com"
+	name = Vignesh Shankar
+	email = vigneshshankar@gmail.com
 
 [push]
   default = simple
