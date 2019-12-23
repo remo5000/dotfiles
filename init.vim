@@ -280,6 +280,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
 
+""""""""""""""""""
+"    Gutentags   "
+""""""""""""""""""
+
+Plug 'ludovicchabant/vim-gutentags'
+let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
+
 
 " Preview definition using K
 nn <silent> K :call CocActionAsync('doHover')<cr>
