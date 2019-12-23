@@ -169,7 +169,7 @@ endfunction
 let rg_colors = '--colors "match:none" --colors "match:style:bold" '
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
-  \   'rg --glob "!.git/*" --column --line-number --no-heading --color=always --smart-case ' . rg_colors . RgArgs(<q-args>), 1,
+  \   'rg --glob "!.git/* !tags !cscope.out" --column --line-number --no-heading --color=always --smart-case ' . rg_colors . RgArgs(<q-args>), 1,
   \   <bang>0 ? fzf#vim#with_preview('up:60%')
   \           : fzf#vim#with_preview('right:40%', '?'),
   \   <bang>0)
