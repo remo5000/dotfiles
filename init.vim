@@ -112,6 +112,7 @@ augroup Indentation
   autocmd Filetype python     setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd Filetype sh         setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype sql        setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd Filetype c          setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd Filetype cpp        setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype thrift     setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype vim        setlocal tabstop=2 softtabstop=2 shiftwidth=2
