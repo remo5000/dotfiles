@@ -22,10 +22,18 @@ end
 
 # Fish shell color scheme
 set dangerous_colors night
-
+set SHELL /usr/local/bin/bash
 # editor
 set -U EDITOR nvim
 set -U MYVIMRC '~/.config/nvim/init.vim'
+
+      ###########################################
+      ##           CLI Program Configs         ##
+      ###########################################
+
+# ASDF
+source ~/.asdf/asdf.fish
+
 
       ###############################
       ##         Aliases           ##
@@ -50,8 +58,6 @@ alias rng='ranger'
 ###################
 ###### vim ########
 ###################
-# Used for vimtex #
-# alias vim='vim --servername VIM'
 alias vim='nvim'
 alias v='vim'
 alias vi='vim'
@@ -67,18 +73,13 @@ set -x FZF_CTRL_T_COMMAND '$FZF_DEFAULT_COMMAND'
 # Use the bindings
 fzf_key_bindings
 
-#####################
-###### emacs ########
-#####################
-alias em='emacs'
-
 ###################
 ###### Git ########
 ###################
 alias gs='git s'
 alias ga='git a'
-alias gap='git ap'
-alias gc='git cv'
+alias gap='git add --patch'
+alias gc='git commit --verbose'
 alias gco='git checkout'
 alias gcom='git checkout master'
 
@@ -93,4 +94,9 @@ alias vimrc='vim ~/.config/nvim/init.vim'
 ## Shortcuts ##
 ###############
 alias wsp='cd ~/stripe/'
+alias docs='cd ~/Documents/Dropbox/Documents'
 alias dl='cd ~/Downloads/'
+
+# opam configuration
+alias op='opam'
+source /Users/vigneshshankar/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
