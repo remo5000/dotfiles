@@ -5,3 +5,4 @@ tags
 tags.lock
 tags.temp
 dbcreds.txt
+.tool-versions

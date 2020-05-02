@@ -40,6 +40,12 @@ autocmd BufWritePre * :%s/\s\+$//e
 " JK is Esc
 imap jk <Esc>
 
+" Quick moves
+nmap J 15j
+vmap J 15j
+nmap K 15k
+vmap K 15k
+
 " Window movement using Tab
 map <tab> <c-w>
 
@@ -288,9 +294,6 @@ Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
 
 
-" Preview definition using K
-nn <silent> K :call CocActionAsync('doHover')<cr>
-
 let g:coc_global_extensions = [
       \"coc-snippets",
       \"coc-json",
@@ -302,6 +305,7 @@ let g:coc_global_extensions = [
       \"coc-dictionary",
       \"coc-word",
       \"coc-vetur",
+      \"coc-go",
       \"coc-java"
       \]
 
@@ -327,4 +331,6 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+" Preview definition using K
+nmap <silent> <leader>k :call CocActionAsync('doHover')<cr>
 
