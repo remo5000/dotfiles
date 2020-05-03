@@ -55,6 +55,8 @@ alias rm='rm -v'
 alias cp='cp -i'
 alias cwd='pwd | tr -d "\r\n" | pbcopy' # copy working directory
 alias foldersize="du -hs"
+# Ranger -- open dir that I last visited
+alias ranger='ranger --choosedir="$HOME/.rangerdir"; cd (cat $HOME/.rangerdir)'
 alias rng='ranger'
 
 ###################
@@ -76,8 +78,10 @@ alias vi='vim'
 ###################
 ###### Git ########
 ###################
-alias gs='git s'
-alias ga='git a'
+alias gs='git status'
+alias ga='git add'
+alias gd='git diffl'
+alias gl='git lg'
 alias gap='git add --patch'
 alias gc='git commit --verbose'
 alias gco='git checkout'
