@@ -1,21 +1,10 @@
       ############################
-      ##         Zsh            ##
+      ##         Env            ##
       ############################
 export EDITOR=nvim
-
-      ############################
-      ##         Brew           ##
-      ############################
-# Use this to initialze a machine -- it's too slow to use everytime
-SHOULD_INSTALL_BREW_PACKAGES=false
-BREW_PACKAGES=(fzf nvim)
-if $SHOULD_INSTALL_BREW_PACKAGES; then
-  brew update
-  for package in $BREW_PACKAGES;
-  do
-    brew list $package || brew install $package
-  done
-fi
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
       ###############################
       ##         Antigen           ##
@@ -96,9 +85,9 @@ alias gcm='git cm'
 alias gco='git checkout'
 alias gcom='git checkout master'
 
-############
-## Config ##
-############
+#############
+## Configs ##
+#############
 alias zshrc='vim ~/.zshrc'
 alias reload='source ~/.zshrc'
 alias vimrc='vim ~/.config/nvim/init.vim'
