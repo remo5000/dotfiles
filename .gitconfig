@@ -12,7 +12,7 @@
 [core]
   excludesfile = ~/.gitignore
   preloadindex = true # http://stackoverflow.com/questions/18257622/why-is-git-core-preloadindex-default-value-false
-  editor = nvim -u ~/.config/nvim/minimal.init.vim
+  editor = nvim
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
 [alias]

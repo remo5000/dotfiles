@@ -215,12 +215,15 @@ augroup improved_autoread
 augroup end
 
 Plug 'tpope/vim-fugitive'
-noremap <leader>gs :Git<CR>
+noremap <leader>gs :Git s<CR>
 noremap <leader>gw :Gwrite<CR>
-noremap <leader>ga :Git add --patch<CR>
-noremap <leader>gc :Gcommit<CR>
-noremap <leader>gv :Gcommit -v<CR>
-noremap <leader>gp :Git push<CR>
+noremap <leader>gaa :Git a<CR>
+noremap <leader>gap :Git ap<CR>
+noremap <leader>gcm :Git commit<CR>
+noremap <leader>gcv :Git commit -v -v<CR>
+noremap <leader>gcp :Git commit --patch -v<CR>
+noremap <leader>gpu :Git push<CR>
+noremap <leader>gpl :Git pull<CR>
 noremap <leader>gdu :Git diff<CR>
 noremap <leader>gdc :Git diff --cached<CR>
 noremap <leader>grc :Git rebase --continue<CR>
