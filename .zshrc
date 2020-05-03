@@ -85,12 +85,13 @@ alias vi='vim'
 ###################
 ###### Git ########
 ###################
-alias gs='git status'
-alias ga='git add'
-alias gd='git diffl'
-alias gl='git lg'
-alias gap='git add --patch'
-alias gc='git commit --verbose'
+alias gs='git s'
+alias gd='git d'
+alias gl='git l'
+alias gp='git ap'
+alias ga='git a'
+alias gcv='git cv'
+alias gcp='git cp'
 alias gco='git checkout'
 alias gcom='git checkout master'
 
