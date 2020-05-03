@@ -20,6 +20,7 @@
   ap = add --patch
   s = status
   cv = commit --verbose
+  rs = reset HEAD
   nuke = reset --hard
   diffl = diff HEAD~ HEAD
   adog = log --all --decorate --oneline --graph
