@@ -235,11 +235,6 @@ Plug 'tpope/vim-vinegar'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Plug 'tpope/vim-surround'
-Plug 'terryma/vim-expand-region'
-
-Plug 'terryma/vim-multiple-cursors'
-" No alt key in terminal, use C-a
-let g:multi_cursor_select_all_key = '<C-a>'
 
 " Highlight word under cursor
 Plug 'pboettch/vim-highlight-cursor-words'
