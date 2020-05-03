@@ -1,6 +1,6 @@
 scriptencoding utf-8
 set encoding=utf-8
-set clipboard=unnamed							 " Use system clipboard for everything
+set clipboard+=unnamedplus         " Use system clipbaord in addition to 0
 set colorcolumn=+1                 " line length matters
 set foldmethod=indent              " set a foldmethod
 set nofoldenable
@@ -74,16 +74,6 @@ command! Dirname :let @+ = expand("%:h")
 " Trailing whitespace
 :highlight ExtraWhitespace ctermbg=red guibg=red
 :match ExtraWhitespace /\s\+$/
-
-" Clipboard
-vnoremap  y  "+y
-nnoremap  Y  "+yg_
-nnoremap  y  "+y
-nnoremap  yy  "+yy
-nnoremap p "+p
-nnoremap P "+P
-vnoremap p "+p
-vnoremap P "+P
 
 " Copy entire buffer
 nnoremap <leader>B ggVGy
