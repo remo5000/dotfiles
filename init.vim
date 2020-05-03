@@ -215,7 +215,7 @@ augroup improved_autoread
 augroup end
 
 Plug 'tpope/vim-fugitive'
-noremap <leader>gs :Git s<CR>
+noremap <leader>gs :Git<CR>
 noremap <leader>gw :Gwrite<CR>
 noremap <leader>gaa :Git a<CR>
 noremap <leader>gap :Git ap<CR>
