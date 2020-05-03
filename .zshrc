@@ -1,10 +1,10 @@
       ############################
-      ##         zsh            ##
+      ##         Zsh            ##
       ############################
 export EDITOR=nvim
 
       ############################
-      ##         brew           ##
+      ##         Brew           ##
       ############################
 # Use this to initialze a machine -- it's too slow to use everytime
 SHOULD_INSTALL_BREW_PACKAGES=false
@@ -18,28 +18,32 @@ if $SHOULD_INSTALL_BREW_PACKAGES; then
 fi
 
       ###############################
-      ##         antigen           ##
+      ##         Antigen           ##
       ###############################
 ANTIGEN_FILE=~/antigen.zsh
 [ -f "$ANTIGEN_FILE" ] || curl -L git.io/antigen > $ANTIGEN_FILE
-source ~/antigen.zsh
+source $ANTIGEN_FILE
 
 antigen use oh-my-zsh
 
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle command-not-found
+
+# Autosuggest
+zmodload zsh/zpty # For 'completion' strategy
+export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+antigen bundle zsh-users/zsh-autosuggestions
 
 antigen theme evan
 
 antigen apply
 
       ###############################
-      ##         aliases           ##
+      ##         Aliases           ##
       ###############################
 
 ###########################
-###### general cli ########
+###### General cli ########
 ###########################
 alias la='ls -la'
 alias ..="cd .."
@@ -49,19 +53,19 @@ alias back='cd -'
 alias o='open'
 alias rm='rm -v'
 alias cp='cp -i'
-alias cwd='pwd | tr -d "\r\n" | pbcopy' #copy working directory
+alias cwd='pwd | tr -d "\r\n" | pbcopy' # copy working directory
 alias foldersize="du -hs"
 alias rng='ranger'
 
 ###################
-###### vim ########
+###### Vim ########
 ###################
 alias vim='nvim'
 alias v='vim'
 alias vi='vim'
 
 ###################
-###### fzf ########
+###### FZF ########
 ###################
  #fd --type f -hidden --follow --exclude .git | fzf
  ## Setting fd as the default source for fzf
@@ -70,7 +74,7 @@ alias vi='vim'
 #set -x FZF_CTRL_T_COMMAND '$FZF_DEFAULT_COMMAND'
 
 ###################
-###### git ########
+###### Git ########
 ###################
 alias gs='git s'
 alias ga='git a'
@@ -80,14 +84,14 @@ alias gco='git checkout'
 alias gcom='git checkout master'
 
 ############
-## config ##
+## Config ##
 ############
 alias zshrc='vim ~/.zshrc'
 alias reload='source ~/.zshrc'
 alias vimrc='vim ~/.config/nvim/init.vim'
 
 ###############
-## shortcuts ##
+## Shortcuts ##
 ###############
 alias wsp='cd ~/workspace/'
 alias docs='cd ~/Documents/Dropbox/Documents'
