@@ -130,7 +130,6 @@ augroup CompProg
   autocmd Filetype python nnoremap <leader>r :w <bar> !python % < a.in <CR>
 augroup END
 
-
 """"""""""""""""""""""""
 "             Plug
 """"""""""""""""""""""""
