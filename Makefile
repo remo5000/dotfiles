@@ -1,4 +1,4 @@
-all: vim fish karabiner
+all: vim fish
 	cp .tmux.conf ~/
 
 fish:
@@ -11,6 +11,3 @@ vim:
 
 minivim:
 	cp minimal.vimrc ~/.vimrc
-
-karabiner:
-	cp custom-capslock.json ~/.config/karabiner/assets/complex_modifications/
