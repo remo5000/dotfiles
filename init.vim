@@ -216,7 +216,7 @@ augroup end
 
 Plug 'tpope/vim-fugitive'
 noremap <leader>gs :Git<CR>
-noremap <leader>gwr :Gwrite<CR>
+noremap <leader>gw :Gwrite<CR>
 noremap <leader>ga :Git add --patch<CR>
 noremap <leader>gc :Gcommit<CR>
 noremap <leader>gv :Gcommit -v<CR>
