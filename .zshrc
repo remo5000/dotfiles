@@ -26,15 +26,22 @@ source $ANTIGEN_FILE
 
 antigen use oh-my-zsh
 
+# Zsh Syntax
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle command-not-found
 
-# Autosuggest
+# Fish-like autosuggest
 zmodload zsh/zpty # For 'completion' strategy
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 antigen bundle zsh-users/zsh-autosuggestions
 
-antigen theme evan
+# Theme
+antigen bundle mafredri/zsh-async
+
+export PURE_CMD_MAX_EXEC_TIME=1   # Don't run for more than a second
+export PURE_GIT_PULL=0            # Don't pull
+export PURE_GIT_UNTRACKED_DIRTY=1 # Check for untracked files
+antigen bundle sindresorhus/pure
+zstyle :prompt:pure:git:stash show yes # Show stash status
 
 antigen apply
 
