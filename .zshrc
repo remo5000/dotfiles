@@ -92,6 +92,7 @@ alias gp='git ap'
 alias ga='git a'
 alias gcv='git cv'
 alias gcp='git cp'
+alias gcm='git cm'
 alias gco='git checkout'
 alias gcom='git checkout master'
 

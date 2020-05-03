@@ -23,6 +23,7 @@
   a = commit --amend --patch
   ap = add --patch
   cv = commit --verbose
+  cm = commit -m
   cp = commit --patch -v
 
   rs = reset HEAD
