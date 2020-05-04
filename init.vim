@@ -214,18 +214,36 @@ augroup improved_autoread
 augroup end
 
 Plug 'tpope/vim-fugitive'
-noremap <leader>gs :Git<CR>
-noremap <leader>gw :Gwrite<CR>
-noremap <leader>gaa :Git a<CR>
-noremap <leader>gap :Git ap<CR>
-noremap <leader>gcm :Git commit<CR>
-noremap <leader>gcv :Git commit -v -v<CR>
-noremap <leader>gcp :Git commit --patch -v<CR>
-noremap <leader>gpu :Git push<CR>
-noremap <leader>gpl :Git pull<CR>
-noremap <leader>gdu :Git diff<CR>
-noremap <leader>gdc :Git diff --cached<CR>
-noremap <leader>grc :Git rebase --continue<CR>
+noremap <leader>g :Git<CR>
+" I'll commit to using Fugitive instead of custom aliases, so
+" here's a cheatsheet:
+"
+" s       stage
+" P       add --patch
+" u       unstage
+" U       unstage all
+" X       disregard file changes (== checkout HEAD <file>)
+" i       jump to next hunk
+"
+" =       toggle diff of file
+" dv      diff of file in vertical splits
+" gI      gitignore the file
+"
+" cc      commit
+" cvc     commit -v
+" cva     commit -v --amend
+" ca      commit --amend
+" ce      commit --amend --no-edit
+" cw      reword last commit (equivalent to rebase -i then rewording)
+"
+" crc     revert
+" coo     checkout
+" cb<spc> :Git branch
+"
+" ri      rebase -i
+" rr      rebase --continue
+" ra      rebase --abort
+" r<spc>  :Git rebase
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Vinegar.
