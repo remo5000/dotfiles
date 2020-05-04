@@ -84,14 +84,17 @@ alias tl='tmux list-sessions'
 ###################
 alias gs='git s'
 alias gd='git d'
+alias gdl='git diffl'
 alias gl='git l'
-alias gp='git ap'
 alias ga='git a'
+alias gap='git ap'
 alias gcv='git cv'
 alias gcp='git cp'
 alias gcm='git cm'
 alias gco='git checkout'
 alias gcom='git checkout master'
+alias gpull='git pull'
+alias gpush='git push'
 
 #############
 ## Configs ##
