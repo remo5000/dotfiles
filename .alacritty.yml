@@ -51,6 +51,3 @@ colors:
     - { index: 19, color: '0x32374d' }
     - { index: 20, color: '0x8796b0' }
     - { index: 21, color: '0x959dcb' }
-
-cursor:
-  style: Beam
