@@ -20,8 +20,9 @@
   d = diff
   diffl = diff HEAD~ HEAD
 
-  a = commit --amend --patch
+  a  = add
   ap = add --patch
+  ca = commit --amend --patch
   cv = commit --verbose
   cm = commit -m
   cp = commit --patch -v

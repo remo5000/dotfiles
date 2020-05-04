@@ -169,8 +169,6 @@ command! -bang -nargs=* Rg
   \           : fzf#vim#with_preview('right:40%', '?'),
   \   <bang>0)
 
-
-
 " Search word under cursor with leader + f.
 nnoremap <silent> <leader>f :silent Rg -sw <C-r>=<SID>CWordEscaped()<CR><CR>
 " Search visual selection with leader + r.
@@ -338,4 +336,3 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 " Preview definition using K
 nmap <silent> <leader>k :call CocActionAsync('doHover')<cr>
-
