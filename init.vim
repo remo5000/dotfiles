@@ -184,15 +184,12 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Themes / Colors
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'chriskempson/base16-vim'
-if has("termguicolors")
-    set termguicolors
-endif
+Plug 'drewtempelmeyer/palenight.vim'
 
 " Airline
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-let g:airline_theme='base16'
+let g:airline_theme = "palenight"
 let g:airline#extensions#tabline#enabled = 1
 
 
@@ -325,9 +322,19 @@ Plug 'jceb/vim-orgmode'
 
 call plug#end()
 
-" colorscheme needs runtime ("echo &rtp") to include Plug directories
-" before it can load installed colors.
-colorscheme base16-material-palenight
+" Color & color compatibility with emulator/tmux
+colorscheme palenight
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+" Italics for my favorite color scheme
+let g:palenight_terminal_italics=1
 
 " Goto mappings
 nmap <silent> gd <Plug>(coc-definition)

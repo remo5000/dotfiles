@@ -1,4 +1,9 @@
-all: vim tmux zsh
+all: vim tmux zsh alacritty
+
+ALACRITTY_CONF=.alacritty.yml
+alacritty:
+	ln -s $(CURDIR)/$(ALACRITTY_CONF) ~/
+
 
 TMUX_CONF=.tmux.conf
 tmux:
@@ -20,6 +25,7 @@ minivim:
 
 clean:
 	# These should be symlinks anyway, but we rename it just in case it's a real file
+	test ! -s ~/$(ALACRITTY_CONF) || mv ~/$(ALACRITTY_CONF) ~/$(TMUX_CONF).old
 	test ! -s ~/$(TMUX_CONF) || mv ~/$(TMUX_CONF) ~/$(TMUX_CONF).old
 	test ! -s ~/$(ZSHRC) || mv ~/$(ZSHRC) ~/$(ZSHRC).old
 	test ! -s $(NVIM_CONFIG_LOC)/$(INIT_VIM) || mv $(NVIM_CONFIG_LOC)/$(INIT_VIM) $(NVIM_CONFIG_LOC)/$(INIT_VIM).old
