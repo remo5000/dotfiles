@@ -1,32 +1,30 @@
-all: vim tmux zsh alacritty
+.DEFAULT_GOAL := install
 
-ALACRITTY_CONF=.alacritty.yml
-alacritty:
-	ln -s $(CURDIR)/$(ALACRITTY_CONF) ~/
+register_tool = $(foreach type, \
+								install clean, \
+								$(eval tools_$(type) += $(1)_$(type)))
+register_varibales = $(foreach variable_declaration, \
+										 $2, \
+										 $(eval $1_install: $(variable_declaration)) \
+										 $(eval $1_clean: $(variable_declaration)))
+reg = $(foreach function, \
+				register_tool register_varibales, \
+				$(call $(function), $1, $2))
 
+$(call reg, vim, 			  config_file=init.vim           config_src=$(CURDIR)  config_dest=~/.config/nvim)
+$(call reg, coc_nvim,	  config_file=coc-settings.json  config_src=$(CURDIR)  config_dest=~/.config/nvim)
+$(call reg, minivim,    config_file=.vimrc             config_src=$(CURDIR)  config_dest=~)
+$(call reg, tmux,       config_file=.tmux.conf          config_src=$(CURDIR)  config_dest=~)
+$(call reg, zsh,        config_file=zshrc              config_src=$(CURDIR)  config_dest=~)
+$(call reg, alacritty,  config_file=.alacritty.yml     config_src=$(CURDIR)  config_dest=~)
 
-TMUX_CONF=.tmux.conf
-tmux:
-	ln -s $(CURDIR)/$(TMUX_CONF) ~/
+install: $(tools_install)
+clean:   $(tools_clean)
 
-ZSHRC=.zshrc
-zsh:
-	ln -s $(CURDIR)/$(ZSHRC) ~/
+$(tools_install):
+	@echo "Installing $(patsubst %_install,%, $@) config..."
+	ln -s $(config_src)/$(config_file) $(config_dest) || echo Please run 'make clean'
 
-INIT_VIM=init.vim
-COC_SETTINGS_JSON=coc-settings.json
-NVIM_CONFIG_LOC=~/.config/nvim
-vim:
-	ln -s $(CURDIR)/$(INIT_VIM) $(NVIM_CONFIG_LOC)/
-	ln -s $(CURDIR)/$(COC_SETTINGS_JSON) $(NVIM_CONFIG_LOC)/
-
-minivim:
-	ln -s ./minimal.vimrc ~/.vimrc
-
-clean:
-	# These should be symlinks anyway, but we rename it just in case it's a real file
-	test ! -s ~/$(ALACRITTY_CONF) || mv ~/$(ALACRITTY_CONF) ~/$(TMUX_CONF).old
-	test ! -s ~/$(TMUX_CONF) || mv ~/$(TMUX_CONF) ~/$(TMUX_CONF).old
-	test ! -s ~/$(ZSHRC) || mv ~/$(ZSHRC) ~/$(ZSHRC).old
-	test ! -s $(NVIM_CONFIG_LOC)/$(INIT_VIM) || mv $(NVIM_CONFIG_LOC)/$(INIT_VIM) $(NVIM_CONFIG_LOC)/$(INIT_VIM).old
-	test ! -s $(NVIM_CONFIG_LOC)/$(COC_SETTINGS_JSON) || mv $(NVIM_CONFIG_LOC)/$(COC_SETTINGS_JSON) $(NVIM_CONFIG_LOC)/$(COC_SETTINGS_JSON).old
+$(tools_clean):
+	@echo "Makng backup of $(patsubst %_clean,%, $@) config..."
+	test ! -s $(config_dest)/$(config_file) || mv $(config_dest)/$(config_file){,.old}
