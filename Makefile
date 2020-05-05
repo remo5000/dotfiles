@@ -11,13 +11,19 @@ reg = $(foreach function, \
 				register_tool register_varibales, \
 				$(call $(function), $1, $2))
 
-$(call reg, vim, 			  config_file=init.vim           config_src=$(CURDIR)  config_dest=~/.config/nvim)
-$(call reg, coc_nvim,	  config_file=coc-settings.json  config_src=$(CURDIR)  config_dest=~/.config/nvim)
+$(call reg, vim,        config_file=init.vim           config_src=$(CURDIR)  config_dest=~/.config/nvim)
+$(call reg, coc_nvim,   config_file=coc-settings.json  config_src=$(CURDIR)  config_dest=~/.config/nvim)
 $(call reg, minivim,    config_file=.vimrc             config_src=$(CURDIR)  config_dest=~)
-$(call reg, tmux,       config_file=.tmux.conf          config_src=$(CURDIR)  config_dest=~)
 $(call reg, zsh,        config_file=zshrc              config_src=$(CURDIR)  config_dest=~)
 $(call reg, alacritty,  config_file=.alacritty.yml     config_src=$(CURDIR)  config_dest=~)
+$(call reg, tmux,       config_file=.tmux.conf         config_src=$(CURDIR)  config_dest=~)
 
+# Tmux package manager
+tpm_install:
+	test -d ~/.tmux/plugins/tpm || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+tmux_install: tpm_install
+
+# Common install instructions for configs
 install: $(tools_install)
 clean:   $(tools_clean)
 
