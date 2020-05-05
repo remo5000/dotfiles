@@ -91,7 +91,11 @@ set rtp+=/usr/local/opt/fzf
 " Never use paste mode
 au InsertLeave * set nopaste
 
-" Filetypes
+""""""""""""""""""
+"                "
+"    Autocmds    "
+"                "
+""""""""""""""""""
 filetype plugin indent on
 augroup Indentation
   autocmd!
@@ -119,49 +123,58 @@ augroup FileTypeAliases
 augroup END
 
 
-" Boxes
-let g:boxes_types = {
-      \"bash": "shell",
-      \"vim":  "vim-box",
-      \}
-let g:boxes_config_file = '~/boxes-config'
-
-function CallBoxes(line_or_lines)
-  let boxed_title_lines = systemlist('boxes'
-        \. ' -f ' . g:boxes_config_file
-        \. ' -d ' . get(g:boxes_types, &filetype, "shell")
-        \, a:line_or_lines)
-  return append(line('.'), boxed_title_lines)
-endfun
-
-function BoxCurrentLine()
-  let current_line = trim(getline("."))
-  call CallBoxes(current_line)
-  call deletebufline(bufname(), line("."))
-endfun
-
-function BoxLines() range
-  let visual_lines = map(getline(line("'<"), line("'>")), {_, val -> trim(val)})
-  call deletebufline(bufname(), line("'<"), line("'>"))
-  normal k
-  call CallBoxes(visual_lines)
-  normal 2j
-endfun
-
+"""""""""""""""
+"             "
+"    Boxes    "
+"             "
+"""""""""""""""
 if executable('boxes')
-  nmap <leader>d :call BoxCurrentLine()<CR>
-  vmap <leader>d :call BoxLines()<CR>
+  let g:boxes_types = {
+        \"bash": "shell",
+        \"vim":  "vim-box",
+        \}
+  let g:boxes_config_file = '~/boxes-config'
+
+  function CallBoxes(line_or_lines, v, h)
+    let boxed_title_lines = systemlist('boxes'
+          \. ' -p ' . 'v' . a:v . 'h' . a:h
+          \. ' -f ' . g:boxes_config_file
+          \. ' -d ' . get(g:boxes_types, &filetype, "shell")
+          \, a:line_or_lines)
+    return append(line('.'), boxed_title_lines)
+  endfun
+
+  function BoxCurrentLine(v, h)
+    let current_line = trim(getline("."))
+    call CallBoxes(current_line, a:v, a:h)
+    call deletebufline(bufname(), line("."))
+  endfun
+
+  function BoxLines(v, h) range
+    let visual_lines = map(getline(line("'<"), line("'>")), {_, val -> trim(val)})
+    call deletebufline(bufname(), line("'<"), line("'>"))
+    normal k
+    call CallBoxes(visual_lines, a:v, a:h)
+    normal 2j
+  endfun
+
+  nmap <leader>dt :call BoxCurrentLine(1,4)<CR>
+  nmap <leader>ds :call BoxCurrentLine(0,4)<CR>
+  vmap <leader>dt :call BoxLines(1,4)<CR>
+  vmap <leader>ds :call BoxLines(0,4)<CR>
 endif
 
-""""""""""""""""""""""""
-"             Plug
-""""""""""""""""""""""""
+""""""""""""""
+"            "
+"    Plug    "
+"            "
+""""""""""""""
 call plug#begin('~/.config/nvim/plugged')
 nnoremap <leader>P :PlugInstall<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" FZF & Rg | Search
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""
+"    FZF & Rg | Search    "
+"""""""""""""""""""""""""""
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
@@ -204,10 +217,23 @@ else
   noremap <leader>p :silent FZF <CR>
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Themes / Colors
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""
+"    Themes / Colors    "
+"""""""""""""""""""""""""
+" Color
 Plug 'drewtempelmeyer/palenight.vim'
+if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+" Italics for my favorite color scheme
+let g:palenight_terminal_italics=1
+
 
 " Airline
 Plug 'vim-airline/vim-airline'
@@ -216,9 +242,9 @@ let g:airline_theme = "palenight"
 let g:airline#extensions#tabline#enabled = 1
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" GitGutter, Fugitive | Git.
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""
+"    GitGutter, Fugitive | Git.    "
+""""""""""""""""""""""""""""""""""""
 Plug 'airblade/vim-gitgutter'
 " Don't use leader h mappings, I want those for buffer navigation.
 let g:gitgutter_map_keys = 0
@@ -263,14 +289,14 @@ noremap <leader>g :Git<CR>
 " ra      rebase --abort
 " r<spc>  :Git rebase
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Vinegar.
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""
+"    Vinegar    "
+"""""""""""""""""
 Plug 'tpope/vim-vinegar'
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Surround, Brackets, Selection, Commenting
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""
+"    Surround, Brackets, Selection, Commenting    "
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 
 Plug 'tpope/vim-surround'
 
@@ -280,9 +306,9 @@ Plug 'pboettch/vim-highlight-cursor-words'
 " Comment stuff
 Plug 'scrooloose/nerdcommenter'
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Syntax
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""
+"    Syntax    "
+""""""""""""""""
 
 " HTML tag matching
 Plug 'valloric/MatchTagAlways'
@@ -300,22 +326,14 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'vim-scripts/cup.vim'
 autocmd BufNewFile,BufRead *.cup setf cup
 
-""""""""""""
-"    Coc   "
-""""""""""""
+"""""""""""""
+"    LSP    "
+"""""""""""""
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "
 " Jump between errors
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
-
-""""""""""""""""""
-"    Gutentags   "
-""""""""""""""""""
-
-Plug 'ludovicchabant/vim-gutentags'
-let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
-
 
 let g:coc_global_extensions = [
       \"coc-snippets",
@@ -332,33 +350,6 @@ let g:coc_global_extensions = [
       \"coc-java"
       \]
 
-" TS syntax
-Plug 'HerringtonDarkholme/yats.vim'
-
-" Vue syntax
-Plug 'posva/vim-vue'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Org mode
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-Plug 'jceb/vim-orgmode'
-
-call plug#end()
-
-" Color & color compatibility with emulator/tmux
-colorscheme palenight
-if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
-" Italics for my favorite color scheme
-let g:palenight_terminal_italics=1
-
 " Goto mappings
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
@@ -366,3 +357,25 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 " Preview definition using K
 nmap <silent> <leader>k :call CocActionAsync('doHover')<cr>
+
+" TS syntax
+Plug 'HerringtonDarkholme/yats.vim'
+
+" Vue syntax
+Plug 'posva/vim-vue'
+
+""""""""""""""
+"    Tags    "
+""""""""""""""
+Plug 'ludovicchabant/vim-gutentags'
+let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
+
+
+""""""""""""""""""
+"    Org mode    "
+""""""""""""""""""
+Plug 'jceb/vim-orgmode'
+
+call plug#end()
+
+colorscheme palenight
