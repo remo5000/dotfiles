@@ -15,29 +15,23 @@ set ignorecase                     " case insensitive search
 set incsearch                      " type-ahead-find
 set smartcase                      " smart case search
 set inccommand=nosplit             " in-place substitution preview
-
 set expandtab                      " use spaces instead of tabs
 set shiftwidth=2                   " 1 tab == 2 spaces
 set tabstop=2                      " 1 tab == 2 spaces
-
 set splitbelow                     " all horizontal splits open to the bottom
 set splitright                     " all vertical splits open to the right
-
 set ruler                          " Use the ruler
 set number                         " Show current line number
-
 set hidden                         " Don't warn when leaving an unsaved buffer
 
 let mapleader = "\<Space>"         " Use space as leader
 
-" Newline
 map <Enter> o<ESC>
 map <S-Enter> O<ESC>
 
 " Remove trailing newline
 autocmd BufWritePre * :%s/\s\+$//e
 
-" JK is Esc
 imap jk <Esc>
 
 " Quick moves
