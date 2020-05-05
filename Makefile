@@ -23,6 +23,11 @@ tpm_install:
 	test -d ~/.tmux/plugins/tpm || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 tmux_install: tpm_install
 
+# Boxes
+boxes_config:
+	cd ~ && curl -O https://raw.githubusercontent.com/ascii-boxes/boxes/master/boxes-config
+vim: boxes_config
+
 # Common install instructions for configs
 install: $(tools_install)
 clean:   $(tools_clean)

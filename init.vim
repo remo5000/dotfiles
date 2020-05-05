@@ -124,11 +124,40 @@ augroup FileTypeAliases
   autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
 augroup END
 
-" CP bindings.
-" Requries an a.in file at the root dir
-augroup CompProg
-  autocmd Filetype python nnoremap <leader>r :w <bar> !python % < a.in <CR>
-augroup END
+
+" Boxes
+let g:boxes_types = {
+      \"bash": "shell",
+      \"vim":  "vim-box",
+      \}
+let g:boxes_config_file = '~/boxes-config'
+
+function CallBoxes(line_or_lines)
+  let boxed_title_lines = systemlist('boxes'
+        \. ' -f ' . g:boxes_config_file
+        \. ' -d ' . get(g:boxes_types, &filetype, "shell")
+        \, a:line_or_lines)
+  return append(line('.'), boxed_title_lines)
+endfun
+
+function BoxCurrentLine()
+  let current_line = trim(getline("."))
+  call CallBoxes(current_line)
+  call deletebufline(bufname(), line("."))
+endfun
+
+function BoxLines() range
+  let visual_lines = map(getline(line("'<"), line("'>")), {_, val -> trim(val)})
+  call deletebufline(bufname(), line("'<"), line("'>"))
+  normal k
+  call CallBoxes(visual_lines)
+  normal 2j
+endfun
+
+if executable('boxes')
+  nmap <leader>d :call BoxCurrentLine()<CR>
+  vmap <leader>d :call BoxLines()<CR>
+endif
 
 """"""""""""""""""""""""
 "             Plug
