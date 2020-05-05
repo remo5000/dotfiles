@@ -20,12 +20,13 @@
   d = diff
   diffl = diff HEAD~ HEAD
 
-  a  = add
-  ap = add --patch
-  ca = commit --amend --patch
-  cv = commit --verbose
-  cm = commit -m
-  cp = commit --patch -v
+  a   = add
+  ap  = add --patch
+  ca  = commit --amend
+  cap = commit --amend --patch
+  cv  = commit --verbose
+  cm  = commit -m
+  cp  = commit --patch -v
 
   rs = reset HEAD
   nuke = reset --hard
