@@ -110,3 +110,8 @@ alias wsp='cd ~/workspace/'
 alias docs='cd ~/Documents/Dropbox/Documents'
 alias dl='cd ~/Downloads/'
 
+##########
+## ASDF ##
+##########
+. $(brew --prefix asdf)/asdf.sh
+

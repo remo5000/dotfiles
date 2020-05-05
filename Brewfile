@@ -1,5 +1,6 @@
 cask "alacritty"
-brew "alacritty"
+
+brew "asdf"
 brew "fzf"
 brew "vim"
 brew "neovim"
