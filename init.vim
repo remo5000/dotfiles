@@ -121,6 +121,7 @@ augroup FileTypeAliases
   autocmd BufNewFile,BufRead {.,}tmux*.conf* setfiletype tmux
   autocmd BufNewFile,BufRead *.tsx set filetype=typescript
   autocmd BufNewFile,BufRead *.ts set filetype=typescript
+  autocmd BufNewFile,BufRead Brewfile set filetype=ruby
   autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
 augroup END
 
