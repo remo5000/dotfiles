@@ -6,3 +6,4 @@ tags.lock
 tags.temp
 dbcreds.txt
 .tool-versions
+Brewfile.lock.json
