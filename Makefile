@@ -1,41 +1,91 @@
-.DEFAULT_GOAL := install
+#########################################################################
+#                                                                       #
+#    Run `all` for setup/updates, `clean` to remove **only configs**    #
+#                                                                       #
+#########################################################################
+.DEFAULT_GOAL := all
+.PHONY: all
+all:| brew install
 
-register_tool = $(foreach type, \
-								install clean, \
-								$(eval tools_$(type) += $(1)_$(type)))
-register_varibales = $(foreach variable_declaration, \
-										 $2, \
-										 $(eval $1_install: $(variable_declaration)) \
-										 $(eval $1_clean: $(variable_declaration)))
-reg = $(foreach function, \
-				register_tool register_varibales, \
-				$(call $(function), $1, $2))
+#############################
+#    Common config setup    #
+#############################
+empty_string  :=
+space := $(empty_string) #
+comma := ,
 
-$(call reg, vim,        config_file=init.vim           config_src=$(CURDIR)  config_dest=~/.config/nvim)
-$(call reg, coc_nvim,   config_file=coc-settings.json  config_src=$(CURDIR)  config_dest=~/.config/nvim)
-$(call reg, minivim,    config_file=.vimrc             config_src=$(CURDIR)  config_dest=~)
-$(call reg, zsh,        config_file=zshrc              config_src=$(CURDIR)  config_dest=~)
-$(call reg, alacritty,  config_file=.alacritty.yml     config_src=$(CURDIR)  config_dest=~)
-$(call reg, tmux,       config_file=.tmux.conf         config_src=$(CURDIR)  config_dest=~)
+.PHONY: install clean
+override define tool_config_targets
+$(config_name) = $1
+$(config_file) = $2
+$(config_src) = $3
+$(config_dest) = $4
 
-# Tmux package manager
-tpm_install:
-	test -d ~/.tmux/plugins/tpm || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-tmux_install: tpm_install
+.PHONY: $(config_name)
+$(config_name): $(config_dest)/$(config_file)
 
-# Boxes
-boxes_config:
+$(config_dest)/$(config_file): $(config_src)/$(config_file)
+	@if test -s $(config_dest)/$(config_file); then \
+		echo Saved a backup of the old $(config_dest)/$(config_file) !; \
+		mv $(config_dest)/$(config_file){,.backup-$(shell date '+%Y-%m-%d-%H:%M:%S')}; \
+	fi
+	@echo Attempting to symlink $(config_src)/$(config_file) to $(config_dest)/$(config_file)
+	ln -s $(config_src)/$(config_file) $(config_dest)/$(config_file)
+
+install: $(config_name)
+
+.PHONY: $(config_name)_clean
+$(config_name)_clean:
+	mv $(config_dest)/$(config_file){,.backup-$(shell date '+%Y-%m-%d-%H:%M:%S')}; \
+
+clean: $(config_name)_clean
+
+endef
+
+all_config_settings = vim,init.vim,$(CURDIR),~/.config/nvim\
+											coc_nvim,coc-settings.json,$(CURDIR),~/.config/nvim\
+											minivim,.vimrc,$(CURDIR),~\
+											zsh,.zshrc,$(CURDIR),~\
+											alacritty,.alacritty.yml,$(CURDIR),~\
+											tmux,.tmux.conf,$(CURDIR),~
+
+$(foreach config_settings_commasep,\
+	$(all_config_settings),\
+	$(eval config_settings_spacesep = $(subst $(comma),$(space),$(config_settings_commasep))) \
+	$(eval config_name = $(word 1, $(config_settings_spacesep))) \
+	$(eval config_file = $(word 2, $(config_settings_spacesep))) \
+	$(eval config_src = $(word 3, $(config_settings_spacesep))) \
+	$(eval config_dest = $(word 4, $(config_settings_spacesep))) \
+	$(eval $(call tool_config_targets,$(config_name),$(config_file),$(config_src),$(config_dest))))
+
+#############################
+#    Tmux plugin manager    #
+#############################
+.PHONY: tpm
+~/.tmux/plugins/tpm:
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+tpm: ~/.tmux/plugins/tpm
+tmux: tpm
+
+###############
+#    Boxes    #
+###############
+.PHONY: boxes
+~/boxes-config:
 	cd ~ && curl -O https://raw.githubusercontent.com/ascii-boxes/boxes/master/boxes-config
-vim: boxes_config
+boxes: ~/boxes-config brew
+vim: boxes
 
-# Common install instructions for configs
-install: $(tools_install)
-clean:   $(tools_clean)
+##############
+#    Brew    #
+##############
+brew: Brewfile.lock.json
 
-$(tools_install):
-	@echo "Installing $(patsubst %_install,%, $@) config..."
-	ln -s $(config_src)/$(config_file) $(config_dest) || echo Please run 'make clean'
+Brewfile.lock.json: brew_exists Brewfile
+	brew bundle install
 
-$(tools_clean):
-	@echo "Makng backup of $(patsubst %_clean,%, $@) config..."
-	test ! -s $(config_dest)/$(config_file) || mv $(config_dest)/$(config_file){,.old}
+brew_exists:
+ifeq ($(shell command -v brew),)
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+endif
+
