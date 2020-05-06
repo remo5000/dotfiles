@@ -64,7 +64,7 @@ $(foreach config_settings_commasep,\
 #############################
 #    Tmux plugin manager    #
 #############################
-.PHONY: tpm
+.PHONY: tpm tmux
 ~/.tmux/plugins/tpm:
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 tpm: ~/.tmux/plugins/tpm
@@ -82,9 +82,10 @@ vim: boxes
 ##############
 #    Brew    #
 ##############
-brew: Brewfile.lock.json
+.PHONY: brew brew_exists
+brew: | brew_exists Brewfile.lock.json
 
-Brewfile.lock.json: brew_exists Brewfile
+Brewfile.lock.json: Brewfile
 	brew bundle install
 
 brew_exists:
