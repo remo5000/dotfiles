@@ -89,13 +89,15 @@ alias gl='git l'
 alias ga='git a'
 alias gap='git ap'
 alias gca='git ca'
+alias gcap='git cap'
 alias gcv='git cv'
-alias gcp='git cp'
 alias gcm='git cm'
+alias gcp='git cp'
 alias gco='git checkout'
 alias gcom='git checkout master'
 alias gpull='git pull'
 alias gpush='git push'
+alias grs='git rs'
 
 #############
 ## Configs ##
