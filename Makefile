@@ -47,7 +47,9 @@ all_config_settings = vim,init.vim,$(CURDIR),~/.config/nvim\
 											minivim,.vimrc,$(CURDIR),~\
 											zsh,.zshrc,$(CURDIR),~\
 											alacritty,.alacritty.yml,$(CURDIR),~\
-											tmux,.tmux.conf,$(CURDIR),~
+											tmux,.tmux.conf,$(CURDIR),~\
+											gitconfig,.gitconfig,$(CURDIR),~\
+											gitignore,.gitignore,$(CURDIR),~
 
 $(foreach config_settings_commasep,\
 	$(all_config_settings),\
