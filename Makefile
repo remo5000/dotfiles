@@ -42,14 +42,15 @@ clean: $(config_name)_clean
 
 endef
 
-all_config_settings = vim,init.vim,$(CURDIR),~/.config/nvim\
-											coc_nvim,coc-settings.json,$(CURDIR),~/.config/nvim\
-											minivim,.vimrc,$(CURDIR),~\
-											zsh,.zshrc,$(CURDIR),~\
-											alacritty,.alacritty.yml,$(CURDIR),~\
-											tmux,.tmux.conf,$(CURDIR),~\
-											gitconfig,.gitconfig,$(CURDIR),~\
-											gitignore,.gitignore,$(CURDIR),~
+all_config_settings = \
+	vim,init.vim,$(CURDIR),~/.config/nvim\
+	coc_nvim,coc-settings.json,$(CURDIR),~/.config/nvim\
+	minivim,.vimrc,$(CURDIR),~\
+	zsh,.zshrc,$(CURDIR),~\
+	alacritty,.alacritty.yml,$(CURDIR),~\
+	tmux,.tmux.conf,$(CURDIR),~\
+	gitconfig,.gitconfig,$(CURDIR),~\
+	gitignore,.gitignore,$(CURDIR),~
 
 $(foreach config_settings_commasep,\
 	$(all_config_settings),\
