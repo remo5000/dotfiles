@@ -20,6 +20,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Fish-like autosuggest
 zmodload zsh/zpty # For 'completion' strategy
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
 export ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 antigen bundle zsh-users/zsh-autosuggestions
 
