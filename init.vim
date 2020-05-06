@@ -1,3 +1,8 @@
+"""""""""""""""""""""""""""""""""""
+"                                 "
+"    General settings/bindings    "
+"                                 "
+"""""""""""""""""""""""""""""""""""
 scriptencoding utf-8
 set encoding=utf-8
 set clipboard+=unnamedplus         " Use system clipbaord in addition to 0
