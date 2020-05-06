@@ -23,6 +23,8 @@ set splitright                     " all vertical splits open to the right
 set ruler                          " Use the ruler
 set number                         " Show current line number
 set hidden                         " Don't warn when leaving an unsaved buffer
+set list                           " Show trailing spaces and all tabs/newlines
+set listchars=tab:›\ ,eol:¬,trail:⋅
 
 let mapleader = "\<Space>"         " Use space as leader
 
