@@ -50,7 +50,8 @@ all_config_settings = \
 	alacritty,.alacritty.yml,$(CURDIR),~\
 	tmux,.tmux.conf,$(CURDIR),~\
 	gitconfig,.gitconfig,$(CURDIR),~\
-	gitignore,.gitignore,$(CURDIR),~
+	gitignore,.gitignore,$(CURDIR),~\
+	brewfile,Brewfile,$(CURDIR),~
 
 $(foreach config_settings_commasep,\
 	$(all_config_settings),\
@@ -83,10 +84,10 @@ vim: boxes
 #    Brew    #
 ##############
 .PHONY: brew brew_exists
-brew: | brew_exists Brewfile.lock.json
+brew: | brew_exists brewfile ~/Brewfile.lock.json
 
-Brewfile.lock.json: Brewfile
-	brew bundle install
+~/Brewfile.lock.json: ~/Brewfile
+	cd ~ && brew bundle install
 
 brew_exists:
 ifeq ($(shell command -v brew),)
