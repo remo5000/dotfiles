@@ -354,6 +354,7 @@ let g:coc_global_extensions = [
       \"coc-dictionary",
       \"coc-word",
       \"coc-vetur",
+      \"coc-solargraph",
       \"coc-go",
       \"coc-java"
       \]
