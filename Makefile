@@ -84,13 +84,22 @@ vim: boxes
 #    Brew    #
 ##############
 .PHONY: brew brew_exists
-brew: | brew_exists brewfile ~/Brewfile.lock.json
-
-~/Brewfile.lock.json: ~/Brewfile
-	cd ~ && brew bundle install
+brew: | brew_exists brew_add brewfile ~/Brewfile.lock.json
 
 brew_exists:
 ifeq ($(shell command -v brew),)
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 endif
+
+brew_add: /usr/local/bin/brew-add.rb
+/usr/local/bin/brew-add.rb: $(CURDIR)/brew-add/brew-add.rb
+	# Brew doesn't recognize soft links -- in any case the file is on VCS
+	@if test -s /usr/local/bin/brew-add.rb; then \
+		echo Saved a backup of the old /usr/local/bin/brew-add.rb !; \
+		mv /usr/local/bin/brew-add.rb{,.backup-$(shell date '+%Y-%m-%d-%H:%M:%S')}; \
+	fi
+	ln $(CURDIR)/brew-add/brew-add.rb /usr/local/bin/brew-add.rb
+
+~/Brewfile.lock.json: ~/Brewfile
+	cd ~ && brew bundle install
 
