@@ -141,6 +141,8 @@ augroup FileTypeAliases
   autocmd BufNewFile,BufRead *.ts set filetype=typescript
   autocmd BufNewFile,BufRead Brewfile set filetype=ruby
   autocmd BufNewFile,BufRead Vagrantfile set filetype=ruby
+  autocmd BufRead,BufNewFile *.ex,*.exs set filetype=elixir
+  autocmd BufRead,BufNewFile *.eex set filetype=eelixir
 augroup END
 
 
@@ -346,6 +348,8 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " Java CUP syntax
 Plug 'vim-scripts/cup.vim'
 autocmd BufNewFile,BufRead *.cup setf cup
+
+Plug 'elixir-editors/vim-elixir'
 
 """""""""""""
 "    LSP    "
