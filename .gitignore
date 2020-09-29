@@ -1,9 +1,13 @@
 .DS_STORE
 compile_commands.json
 .DS_Store
+.lein-repl-history
+.nrepl-port
 tags
 tags.lock
 tags.temp
 dbcreds.txt
-.tool-versions
 Brewfile.lock.json
+.idea
+cmake-build-debug/
+cmake-debug-build/

@@ -16,23 +16,9 @@
   whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 
 [alias]
-  s = status
-  d = diff
-  diffl = diff HEAD~ HEAD
-
-  a   = add
-  ap  = add --patch
-  ca  = commit --amend
-  cap = commit --amend --patch
-  cv  = commit --verbose
-  cm  = commit -m
-  cp  = commit --patch -v
-
-  rs = reset HEAD
   nuke = reset --hard
-
   adog = log --all --decorate --oneline --graph
-  l = log --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)%an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+  lg = log --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)%an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
   lga = log --all --format=format:'%C(bold blue)%h%C(reset) %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)%an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
 
 [merge]
