@@ -118,11 +118,20 @@ augroup Indentation
   autocmd Filetype sh         setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype sql        setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype c          setlocal tabstop=4 softtabstop=4 shiftwidth=4
-  autocmd Filetype cpp        setlocal tabstop=2 softtabstop=2 shiftwidth=2
+  autocmd Filetype cpp        setlocal tabstop=4 softtabstop=4 shiftwidth=4
   autocmd Filetype thrift     setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype vim        setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype xml        setlocal tabstop=2 softtabstop=2 shiftwidth=2
   autocmd Filetype yaml       setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+
+augroup CompetitiveProgramming
+  autocmd Filetype python nnoremap <F9> :w <bar> !python3 %:r.py < %:r.test<CR>
+  autocmd Filetype cpp nnoremap <F9> :w <bar> !g++ -Wall -Wno-unused-result -std=c++11   -O0   % -o %:r && ./%:r < %:r.test<CR>
+  autocmd Filetype cpp nnoremap <F10> :!./%:r<CR>
+  autocmd Filetype cpp,python nnoremap <leader>te gg:r ~/workspace/algo-practice/template.cpp<CR>
+  autocmd Filetype cpp,python nnoremap <leader>tc :vsp %:r.test<CR>
+  autocmd Filetype cpp,python nnoremap <leader>tp :vsp %:r.test<CR>gg0VGp:w<CR><c-w>h
 augroup END
 
 augroup FileTypeAliases
