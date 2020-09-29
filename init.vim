@@ -46,6 +46,10 @@ nmap J 15j
 vmap J 15j
 nmap K 15k
 vmap K 15k
+nmap H 0
+vmap H 0
+nmap L $
+vmap L $
 
 " Window movement using Tab
 map <tab> <c-w>
