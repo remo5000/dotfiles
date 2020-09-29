@@ -390,13 +390,6 @@ Plug 'HerringtonDarkholme/yats.vim'
 " Vue syntax
 Plug 'posva/vim-vue'
 
-""""""""""""""
-"    Tags    "
-""""""""""""""
-Plug 'ludovicchabant/vim-gutentags'
-let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
-
-
 """"""""""""""""""
 "    Org mode    "
 """"""""""""""""""
