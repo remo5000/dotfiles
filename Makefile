@@ -84,7 +84,7 @@ vim: boxes
 ##############
 #    Brew    #
 ##############
-.PHONY: brew brew_exists
+.PHONY: brew brew_exists brew_add
 brew: | brew_exists brew_add brewfile ~/Brewfile.lock.json
 
 brew_exists:
