@@ -47,6 +47,7 @@ all_config_settings = \
 	coc_nvim,coc-settings.json,$(CURDIR),~/.config/nvim\
 	minivim,.vimrc,$(CURDIR),~\
 	zsh,.zshrc,$(CURDIR),~\
+	fish,config.fish,$(CURDIR),~/.config/fish\
 	alacritty,.alacritty.yml,$(CURDIR),~\
 	tmux,.tmux.conf,$(CURDIR),~\
 	gitconfig,.gitconfig,$(CURDIR),~\
