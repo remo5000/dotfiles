@@ -1,17 +1,5 @@
 {
   "languageserver": {
-    "sorbet-lsp": {
-      "command": "/Users/vigneshshankar/stripe/sorbet/bazel-bin/main/sorbet",
-      "args": [
-        "--lsp",
-        "-v",
-        "--enable-all-experimental-lsp-features",
-        "."
-      ],
-      "filetypes": ["ruby"],
-       "initializationOptions": {},
-      "settings": {}
-    },
     "clangd": {
       "command": "/usr/local/Cellar/llvm/8.0.0_1/bin/clangd",
       "rootPatterns": [
@@ -23,6 +11,26 @@
         ".hg/"
       ],
       "filetypes": ["c", "cpp", "objc", "objcpp"]
+    },
+    "clojure-lsp": {
+      "command": "bash",
+      "args": ["-c", "clojure-lsp"],
+      "filetypes": ["clojure"],
+      "rootPatterns": ["project.clj"],
+      "additionalSchemes": ["jar", "zipfile"],
+      "trace.server": "verbose",
+      "initializationOptions": {
+      }
+    },
+    "ocaml": {
+      "command": "ocaml-language-server",
+      "args": ["--stdio"],
+      "filetypes": ["ocaml", "reason"]
     }
-  }
+  },
+  "json.schemas": [{
+    "fileMatch": [
+      "*schema.json"
+    ]
+  }]
 }
