@@ -119,3 +119,5 @@ alias dl='cd ~/Downloads/'
 ##########
 . $(brew --prefix asdf)/asdf.sh
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
