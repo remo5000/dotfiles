@@ -10,7 +10,6 @@ set colorcolumn=+1                 " line length matters
 set foldmethod=indent              " set a foldmethod
 set nofoldenable
 set mouse=a                        " enable mouse
-set number                         " line numbers
 set scrolloff=10                   " Always shows some lines of vertical context around the cursor
 set showcmd                        " show incomplete commands
 set undofile
@@ -30,6 +29,15 @@ set number                         " Show current line number
 set hidden                         " Don't warn when leaving an unsaved buffer
 set list                           " Show trailing spaces and all tabs/newlines
 set listchars=tab:›\ ,eol:¬,trail:⋅
+
+:set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+		  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+		  \,sm:block-blinkwait175-blinkoff150-blinkon175
+
+" Python magic
+let g:python_host_prog = '/Users/vigneshshankar/.pyenv/shims/python'
+let g:python3_host_prog = '/Users/vigneshshankar/.pyenv/shims/python3'
+
 
 let mapleader = "\<Space>"         " Use space as leader
 
@@ -51,6 +59,13 @@ vmap H 0
 nmap L $
 vmap L $
 
+let s:line_highlight = { 'gui': '#1c1f2b', 'cterm': 235 }
+set cursorline
+
+" Line numbers optional
+set nonumber
+nnoremap <leader>n :set nu!<CR>
+
 " Window movement using Tab
 map <tab> <c-w>
 
@@ -69,7 +84,7 @@ nnoremap <leader>w :bp<bar>sp<bar>bn<bar>bd<CR>
 vnorem // y/<c-r>"<cr>
 
 " Clear highlights.
-nnoremap <silent> <C-l> :nohl<CR><C-l>
+nnoremap <leader>L :nohl<CR>
 
 " Copy current filepath to systen clipboard.
 nnoremap <Leader>y :let @+ = expand("%")<CR>
@@ -84,20 +99,17 @@ command! Dirname :let @+ = expand("%:h")
 nnoremap <leader>B ggVGy
 
 " Search for buffers
-nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>b :MRU<CR>
 
 " Navigate buffers using leader h/l.
 noremap <leader>h :bp <CR>
 nnoremap <leader>l :bn <CR>
 
 " Call "make".
-nnoremap <leader>m :!make<CR>
+nnoremap <leader>mm :!make<CR>
 
 " Close netrw buffers when we open a file.
 let g:netrw_fastbrowse = 0
-
-" FZF
-set rtp+=/usr/local/opt/fzf
 
 " Never use paste mode
 au InsertLeave * set nopaste
@@ -144,6 +156,22 @@ augroup FileTypeAliases
   autocmd BufRead,BufNewFile *.ex,*.exs set filetype=elixir
   autocmd BufRead,BufNewFile *.eex set filetype=eelixir
 augroup END
+
+augroup CS3203
+  autocmd BufRead */3203/*Test*.cpp  nnoremap <leader>t mb?TEST_CASEf(llya"'b:nohl<CR>:VtrSendCommandToRunner! make unit_testing TEST_TARGET=<C-R>+<CR>
+  autocmd BufRead */3203/* nnoremap <leader>T :VtrSendCommandToRunner! make unit_testing<CR>
+  autocmd BufRead */3203/* nnoremap <leader>mu :VtrSendCommandToRunner! make unit_testing<CR>
+  autocmd BufRead */3203/* nnoremap <leader>mi :VtrSendCommandToRunner! make integration_testing<CR>
+  autocmd BufRead */3203/* nnoremap <leader>mb :VtrSendCommandToRunner! make build<CR>
+  autocmd BufRead */3203/* nnoremap <leader>mc :VtrSendCommandToRunner! make clean<CR>
+  autocmd BufRead */3203/* nnoremap <leader>mf :VtrSendCommandToRunner! make format<CR>
+augroup END
+
+function! Formatonsave()
+  let l:formatdiff = 1
+  pyf ~/workspace/dotfiles/clang-format.py
+endfunction
+autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
 
 
 """""""""""""""
@@ -198,8 +226,12 @@ nnoremap <leader>P :PlugInstall<CR>
 """""""""""""""""""""""""""
 "    FZF & Rg | Search    "
 """""""""""""""""""""""""""
-Plug '/usr/local/opt/fzf'
+set rtp+=/usr/local/opt/fzf
+Plug '/usr/local/bin/fzf'
 Plug 'junegunn/fzf.vim'
+
+" MRU Buffers
+Plug 'yegappan/mru'
 
 " Escape question marks for usage in Rg.
 function! s:CWordEscaped()
@@ -263,6 +295,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme = "palenight"
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_disabled=0
 
 
 """"""""""""""""""""""""""""""""""""
@@ -329,6 +362,8 @@ Plug 'pboettch/vim-highlight-cursor-words'
 " Comment stuff
 Plug 'scrooloose/nerdcommenter'
 
+Plug 'jiangmiao/auto-pairs'
+
 """"""""""""""""
 "    Syntax    "
 """"""""""""""""
@@ -351,15 +386,13 @@ autocmd BufNewFile,BufRead *.cup setf cup
 
 Plug 'elixir-editors/vim-elixir'
 
+Plug 'neovimhaskell/haskell-vim'
+
 """""""""""""
 "    LSP    "
 """""""""""""
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "
-" Jump between errors
-nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
-nmap <silent> <C-j> <Plug>(coc-diagnostic-next)
-
 let g:coc_global_extensions = [
       \"coc-snippets",
       \"coc-json",
@@ -373,16 +406,50 @@ let g:coc_global_extensions = [
       \"coc-vetur",
       \"coc-solargraph",
       \"coc-go",
-      \"coc-java"
+      \"coc-java",
       \]
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Jump between errors
+nmap <silent> <leader>k <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>j <Plug>(coc-diagnostic-next)
 
 " Goto mappings
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gt <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-" Preview definition using K
-nmap <silent> <leader>k :call CocActionAsync('doHover')<cr>
+nmap <silent> gR <Plug>(coc-refactor)
+
+" Preview definition using i
+nmap <silent> <leader>i :call CocActionAsync('doHover')<cr>
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>F  <Plug>(coc-format-selected)
+nmap <leader>F  <Plug>(coc-format-selected)
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
 
 " TS syntax
 Plug 'HerringtonDarkholme/yats.vim'
@@ -401,7 +468,18 @@ Plug 'jceb/vim-orgmode'
 """""""""""""""
 Plug 'vhdirk/vim-cmake'
 
+""""""""""""""
+"    Tmux    "
+""""""""""""""
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-runner'
+nnoremap <leader>mm :VtrSendCommandToRunner! make<CR>
 call plug#end()
+
+" Tmux
+let g:VtrOrientation = "v"
+let g:VtrPercentage = 35
+
 
 colorscheme palenight
 

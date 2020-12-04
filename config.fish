@@ -5,20 +5,17 @@
 # Use emacs bindings for shell
 set -U fish_key_bindings fish_default_key_bindings
 
-# Fish shell color scheme
-#
-set SHELL /bin/bash
-
 # Set editor
 set EDITOR nvim
+set GH_EDITOR nvim
+
+set SHELL /usr/local/bin/fish
 
 # Set lang
 set LANGUAGE en_US.UTF-8
 set LANG en_US.UTF-8
 set LC_ALL en_US.UTF-8
 
-# Opam
-set -gx PATH /Users/vigneshshankar/.opam/4.10.0/bin $PATH
 
       ###########################################
       ##           CLI Program Configs         ##
@@ -26,6 +23,14 @@ set -gx PATH /Users/vigneshshankar/.opam/4.10.0/bin $PATH
 
 # ASDF
 source ~/.asdf/asdf.fish
+
+# DO THESE IN CLI, NOT HERE
+# # pyenv
+# set -Ux PYENV_ROOT $HOME/.pyenv
+# set -Ux fish_user_paths $PYENV_ROOT/bin $fish_user_paths
+#
+# # Opam
+# set -Ux fish_user_paths /Users/vigneshshankar/.opam/4.10.0/bin $fish_user_paths
 
       ###############################
       ##         Aliases           ##
@@ -104,3 +109,6 @@ alias dl='cd ~/Downloads/'
 # # opam configuration
 # alias op='opam'
 # source /Users/vigneshshankar/.opam/opam-init/init.fish > /dev/null 2> /dev/null; or true
+if command -v pyenv 1>/dev/null 2>&1;
+  pyenv init - | source;
+end
