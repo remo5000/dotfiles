@@ -78,9 +78,9 @@ alias gcap='git commit --amend --patch --verbose'
 alias gca='git commit --amend --verbose'
 alias gcm='git commit -m'
 alias gco='git checkout'
-alias gcom='git checkout master'
+alias gcom='git checkout main'
 alias gfo='git fetch origin'
-alias gfom='git fetch origin master'
+alias gfom='git fetch origin main'
 alias ghi='gh issue list --assignee remo5000 | fzf | awk \'{print $1;}\' | xargs -I% gh issue view %'
 
 ####################

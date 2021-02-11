@@ -44,9 +44,6 @@ let mapleader = "\<Space>"         " Use space as leader
 map <Enter> o<ESC>
 map <S-Enter> O<ESC>
 
-" Remove trailing newline
-autocmd BufWritePre * :%s/\s\+$//e
-
 imap jk <Esc>
 
 " Quick moves

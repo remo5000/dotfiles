@@ -42,7 +42,7 @@
 (defun open-user-init-file ()
   "Edit the `user-init-file', in another window."
   (interactive)
-  (find-file-other-window user-init-file))
+  (find-file user-init-file))
 
 ;; Setup leader
 (defvar leader-map
@@ -59,6 +59,7 @@
       (let ((kmp (make-sparse-keymap)))
 	(define-key kmp "b" 'eval-buffer)
 	(define-key kmp "e" 'eval-expression)
+	(define-key kmp "f" 'open-user-init-file)
 	kmp))
     kmp)
   "Keymap for Leader key shortcuts.")
@@ -133,3 +134,6 @@
 (setq-default show-trailing-whitespace t)
 
 (message "Emacs config reloaded")
+;; ## added by OPAM user-setup for emacs / base ## 56ab50dc8996d2bb95e7856a6eddb17b ## you can edit, but keep this line
+(require 'opam-user-setup "~/.emacs.d/opam-user-setup.el")
+;; ## end of OPAM user-setup addition for emacs / base ## keep this line

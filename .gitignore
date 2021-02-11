@@ -9,5 +9,6 @@ tags.temp
 dbcreds.txt
 Brewfile.lock.json
 .idea
+.clangd/
 cmake-build-debug/
 cmake-debug-build/
