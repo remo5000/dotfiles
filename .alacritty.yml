@@ -10,6 +10,9 @@ font:
   normal:
     family: Luxi Mono
 
+key_bindings:
+  - { key: N, mods: Command, action: SpawnNewInstance }
+
  # # Base16 Material Palenight 256 - alacritty color config
  # Nate Peterson
 colors:
